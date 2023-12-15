@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/Button";
 import { Calculator } from "@/components/Calculator";
 import { Display } from "@/components/Display";
-import { MathSymbol } from "@/components/MathSymbol";
 
 const INITIAL_STATE = {
   clear: false,
@@ -205,9 +204,9 @@ export default function Home() {
         <Display value={display} />
         <Button label="C" bt-type="operation" double onClick={clearDisplay} />
         <Button disabled={error} label="⌫" bt-type="operation" double onClick={erase} />
-        <Button disabled={error} label={<MathSymbol type="fract" />} bt-type="operation" onClick={() => setOperation('fractal')} />
-        <Button disabled={error} label={<MathSymbol type="pow" />} bt-type="operation" onClick={() => setOperation('pow')} />
-        <Button disabled={error} label={<MathSymbol type="sqrt" />} bt-type="operation" onClick={() => setOperation('sqrt')} />
+        <Button disabled={error} label="1/&#x1D465;"bt-type="operation" onClick={() => setOperation('fractal')} />
+        <Button disabled={error} label="&#x1D465;²" bt-type="operation" onClick={() => setOperation('pow')} />
+        <Button disabled={error} label="&#x221A;" bt-type="operation" onClick={() => setOperation('sqrt')} />
         <Button disabled={error} label="&#xf7;" bt-type="operation" onClick={() => setOperation('/')} />
         <Button disabled={error} label="7" bt-type="number" onClick={() => addCharacter(7)} />
         <Button disabled={error} label="8" bt-type="number" onClick={() => addCharacter(8)} />

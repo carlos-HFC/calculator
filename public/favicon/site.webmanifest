@@ -15,5 +15,9 @@
   ],
   "theme_color": "#292e49",
   "background_color": "#292e49",
-  "display": "standalone"
+  "display": "standalone",
+  "default_locale": "pt_BR",
+  "description": "Acesse nossa calculadora e simplifique seus cálculos matemáticos",
+  "author": "Carlos Faustino",
+  "start_url": "/"
 }
