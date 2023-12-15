@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { CalculatorType } from "@/@types";
 import { Button } from "@/components/Button";
 import { Calculator } from "@/components/Calculator";
 import { Display } from "@/components/Display";
+import { factorialize, termialize } from "@/utils";
 
 const INITIAL_STATE = {
   clear: false,
@@ -16,6 +18,10 @@ const INITIAL_STATE = {
 export default function Home() {
   const [display, setDisplay] = useState("0");
   const [calc, setCalc] = useState(INITIAL_STATE);
+  const [type] = useState<CalculatorType>("science");
+
+  const IS_SCIENCE = useMemo(() => type === 'science', [type]);
+  const error = useMemo(() => display === 'Erro', [display]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -25,6 +31,7 @@ export default function Home() {
         case 'Enter':
           return setOperation('=');
         case 'Escape':
+        case 'Delete':
           return clearDisplay();
         case '/':
           return setOperation('/');
@@ -34,6 +41,12 @@ export default function Home() {
           return setOperation('-');
         case '*':
           return setOperation('*');
+        case '%':
+          return setOperation('%');
+        case '?':
+          return setOperation('?');
+        case '!':
+          return setOperation('!');
         case ',':
         case '.':
           return addCharacter('.');
@@ -66,11 +79,6 @@ export default function Home() {
 
     return () => document.removeEventListener('keydown', onKeyDown);
   });
-
-
-  const error = useMemo(() => {
-    return display === 'Erro';
-  }, [display]);
 
   const clearDisplay = useCallback(
     () => {
@@ -119,7 +127,7 @@ export default function Home() {
 
   const setOperation = useCallback(
     (operacao: string) => {
-      const BASIC_OPERATION = operacao === '/' || operacao === '-' || operacao === '+' || operacao === '*' || operacao === '=';
+      const BASIC_OPERATION = operacao === '/' || operacao === '-' || operacao === '+' || operacao === '*' || operacao === '=' || operacao === '%';
 
       const { current, operation, values } = calc;
 
@@ -145,6 +153,9 @@ export default function Home() {
             break;
           case '*':
             values[0] = values[0] * values[1];
+            break;
+          case '%':
+            values[0] = values[0] % values[1];
             break;
         }
       }
@@ -180,6 +191,48 @@ export default function Home() {
             clear: true,
             values
           }));
+        case 'pi':
+          const piValue = String(Math.PI);
+          setDisplay(piValue);
+
+          values[0] = Number(piValue);
+          return setCalc(prev => ({
+            ...prev,
+            clear: true,
+            values
+          }));
+        case '!':
+          if (values[0] < 0) return setDisplay("Erro");
+
+          const factorialValue = String(factorialize(values[0]));
+          setDisplay(factorialValue);
+
+          values[0] = Number(factorialValue);
+          return setCalc(prev => ({
+            ...prev,
+            clear: true,
+            values
+          }));
+        case '?':
+          const termialValue = String(termialize(values[0]));
+          setDisplay(termialValue);
+
+          values[0] = Number(termialValue);
+          return setCalc(prev => ({
+            ...prev,
+            clear: true,
+            values
+          }));
+        case 'abs':
+          const absValue = String(Math.abs(values[0]));
+          setDisplay(absValue);
+
+          values[0] = Number(absValue);
+          return setCalc(prev => ({
+            ...prev,
+            clear: true,
+            values
+          }));
       }
 
       const equals = operacao === '=';
@@ -195,16 +248,28 @@ export default function Home() {
         values
       });
     },
-    [calc, display]
+    [calc, display, error]
   );
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center text-center text-white bg-default">
-      <Calculator>
+    <main className="flex min-h-screen flex-col items-center justify-center text-center text-white bg-default select-none">
+      <Calculator type={type}>
         <Display value={display} />
+        {IS_SCIENCE &&
+          <Button disabled={error} label="&#x3C0;" bt-type="operation" onClick={() => setOperation('pi')} />
+        }
         <Button label="C" bt-type="operation" double onClick={clearDisplay} />
-        <Button disabled={error} label="⌫" bt-type="operation" double onClick={erase} />
-        <Button disabled={error} label="1/&#x1D465;"bt-type="operation" onClick={() => setOperation('fractal')} />
+        <Button disabled={error} label="⌫" bt-type="operation" double={!IS_SCIENCE} onClick={erase} />
+
+        {IS_SCIENCE && (
+          <>
+            <Button disabled={error} label="|&#x1D465;|" bt-type="operation" onClick={() => setOperation('abs')} />
+            <Button disabled={error} label="&#x1D45B;?" bt-type="operation" onClick={() => setOperation('?')} />
+            <Button disabled={error} label="&#x1D45B;!" bt-type="operation" onClick={() => setOperation('!')} />
+            <Button disabled={error} label="mod" bt-type="operation" onClick={() => setOperation('%')} />
+          </>
+        )}
+        <Button disabled={error} label="1/&#x1D465;" bt-type="operation" onClick={() => setOperation('fractal')} />
         <Button disabled={error} label="&#x1D465;²" bt-type="operation" onClick={() => setOperation('pow')} />
         <Button disabled={error} label="&#x221A;" bt-type="operation" onClick={() => setOperation('sqrt')} />
         <Button disabled={error} label="&#xf7;" bt-type="operation" onClick={() => setOperation('/')} />
