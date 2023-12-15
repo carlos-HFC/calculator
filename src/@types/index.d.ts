@@ -1,0 +1,1 @@
+export type CalculatorType = "default" | "science";
