@@ -7,46 +7,31 @@ export const sharedMetadata: Metadata = {
     card: 'summary_large_image',
     title: 'Calculadora',
     description: 'Acesse nossa calculadora e simplifique seus cálculos matemáticos',
-    images: '/favicon/favicon-512x512.png'
+    images: {
+      url: '/favicon/favicon-512x512.png',
+      alt: 'Calculator Logo',
+    },
   },
   openGraph: {
     type: 'website',
     siteName: 'Calculadora',
     title: 'Calculadora',
     description: 'Acesse nossa calculadora e simplifique seus cálculos matemáticos',
-    images: '/favicon/favicon-512x512.png',
-    locale: 'pt_BR'
+    images: {
+      url: '/favicon/favicon-512x512.png',
+      alt: 'Calculator Logo',
+    },
+    locale: 'pt_BR',
+    url: new URL(String(process.env.NEXT_PUBLIC_BASE_URL))
   },
   manifest: '/favicon/site.webmanifest',
-  icons: [
-    {
-      rel: "apple-touch-icon",
-      url: "/favicon/apple-touch-icon.png",
-      sizes: "180x180",
-      type: "image/png"
-    },
-    {
-      rel: "shortcut icon",
-      url: "/favicon/favicon.ico"
-    },
-    {
-      rel: "icon",
-      url: "/favicon/favicon-16x16.png",
-      sizes: "16x16",
-      type: "image/png"
-    },
-    {
-      rel: "icon",
-      url: "/favicon/favicon-32x32.png",
-      sizes: "32x32",
-      type: "image/png"
-    },
-    {
-      rel: "mask-icon",
-      url: "/favicon/safari-pinned-tab.svg",
-      color: "#292e49"
-    },
-  ],
+  icons: {
+    shortcut: '/shortcut-icon.png',
+    other: {
+      rel: 'mask-icon',
+      url: '/safari-pinned-tab.svg'
+    }
+  },
   creator: "Carlos Faustino",
   keywords: ["Calculadora", "React", "Typescript", "Next.js"],
   authors: [
@@ -56,5 +41,8 @@ export const sharedMetadata: Metadata = {
     }
   ],
   category: 'technology',
-  metadataBase: new URL(String(process.env.NEXT_PUBLIC_BASE_URL))
+  metadataBase: new URL(String(process.env.NEXT_PUBLIC_BASE_URL)),
+  alternates: {
+    canonical: String(process.env.NEXT_PUBLIC_BASE_URL)
+  }
 };
