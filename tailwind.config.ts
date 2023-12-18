@@ -11,6 +11,10 @@ const config: Config = {
       backgroundImage: {
         default: 'linear-gradient(to right, rgb(83,105,118), rgb(41,46,73))'
       },
+      screens: {
+        xs: '460px',
+        lg: '992px'
+      }
     },
   },
   plugins: [],
