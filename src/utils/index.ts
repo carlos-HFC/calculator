@@ -6,7 +6,9 @@ export function factorialize(value: number): number {
 }
 
 export function termialize(value: number): number {
-  if (value === 0) return 0;
-
   return (value * (value + 1)) / 2;
+}
+
+export function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
 }
