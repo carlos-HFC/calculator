@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { CalculatorType } from "@/@types";
 import { Button } from "@/components/Button";
 import { Calculator } from "@/components/Calculator";
 import { Display } from "@/components/Display";
+import { useCalculator } from "@/contexts/Calculator";
 import { factorialize, termialize } from "@/utils";
 
 const INITIAL_STATE = {
@@ -18,7 +18,8 @@ const INITIAL_STATE = {
 export default function Home() {
   const [display, setDisplay] = useState("0");
   const [calc, setCalc] = useState(INITIAL_STATE);
-  const [type] = useState<CalculatorType>("science");
+
+  const { type } = useCalculator();
 
   const IS_SCIENCE = useMemo(() => type === 'science', [type]);
   const error = useMemo(() => display === 'Erro', [display]);
@@ -127,7 +128,7 @@ export default function Home() {
 
   const setOperation = useCallback(
     (operacao: string) => {
-      const BASIC_OPERATION = operacao === '/' || operacao === '-' || operacao === '+' || operacao === '*' || operacao === '=' || operacao === '%';
+      const BASIC_OPERATION = operacao === '/' || operacao === '-' || operacao === '+' || operacao === '*' || operacao === '=' || operacao === '%' || operacao === 'pow';
 
       const { current, operation, values } = calc;
 
@@ -157,6 +158,9 @@ export default function Home() {
           case '%':
             values[0] = values[0] % values[1];
             break;
+          case 'pow':
+            values[0] = Math.pow(values[0], values[1]);
+            break;
         }
       }
 
@@ -181,7 +185,7 @@ export default function Home() {
             clear: true,
             values
           }));
-        case 'pow':
+        case 'pow-2':
           const powValue = String(Math.pow(values[0], 2));
           setDisplay(powValue);
 
@@ -252,25 +256,28 @@ export default function Home() {
   );
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center text-center text-white bg-default select-none">
-      <Calculator type={type}>
+    <main className="flex min-h-screen flex-col items-center text-center text-white bg-default select-none">
+      <Calculator>
         <Display value={display} />
-        {IS_SCIENCE &&
-          <Button disabled={error} label="&#x3C0;" bt-type="operation" onClick={() => setOperation('pi')} />
-        }
-        <Button label="C" bt-type="operation" double onClick={clearDisplay} />
+        {IS_SCIENCE && (
+          <>
+            <Button disabled={error} label="|&#x1D465;|" bt-type="operation" onClick={() => setOperation('abs')} />
+            <Button disabled={error} label="&#x3C0;" bt-type="operation" onClick={() => setOperation('pi')} />
+          </>
+        )}
+        <Button label="C" bt-type="operation" double={!IS_SCIENCE} onClick={clearDisplay} />
         <Button disabled={error} label="⌫" bt-type="operation" double={!IS_SCIENCE} onClick={erase} />
 
         {IS_SCIENCE && (
           <>
-            <Button disabled={error} label="|&#x1D465;|" bt-type="operation" onClick={() => setOperation('abs')} />
+            <Button disabled={error} label="&#x1D465;&#x207F;" bt-type="operation" onClick={() => setOperation('pow')} />
             <Button disabled={error} label="&#x1D45B;?" bt-type="operation" onClick={() => setOperation('?')} />
             <Button disabled={error} label="&#x1D45B;!" bt-type="operation" onClick={() => setOperation('!')} />
             <Button disabled={error} label="mod" bt-type="operation" onClick={() => setOperation('%')} />
           </>
         )}
         <Button disabled={error} label="1/&#x1D465;" bt-type="operation" onClick={() => setOperation('fractal')} />
-        <Button disabled={error} label="&#x1D465;²" bt-type="operation" onClick={() => setOperation('pow')} />
+        <Button disabled={error} label="&#x1D465;²" bt-type="operation" onClick={() => setOperation('pow-2')} />
         <Button disabled={error} label="&#x221A;" bt-type="operation" onClick={() => setOperation('sqrt')} />
         <Button disabled={error} label="&#xf7;" bt-type="operation" onClick={() => setOperation('/')} />
         <Button disabled={error} label="7" bt-type="number" onClick={() => addCharacter(7)} />

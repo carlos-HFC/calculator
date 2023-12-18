@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next';
+import { PropsWithChildren } from "react";
 
 import { sharedMetadata } from "./shared-metadata";
+import { CalculatorProvider } from "@/contexts/Calculator";
+import { Header } from "@/components/Header";
 
 import './globals.css';
 
@@ -11,14 +14,15 @@ export const viewport: Viewport = {
   width: 'device-width',
 };
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body className="overflow-x-hidden">
+        <CalculatorProvider>
+          <Header />
+          {children}
+        </CalculatorProvider>
+      </body>
     </html>
   );
 }
