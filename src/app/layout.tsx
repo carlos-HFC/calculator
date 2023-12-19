@@ -17,7 +17,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="pt-BR">
-      <body className="overflow-x-hidden">
+      <body className="overflow-x-hidden bg-default min-h-screen">
         <CalculatorProvider>
           <Header />
           {children}
