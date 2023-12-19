@@ -7,3 +7,5 @@ export type MenuItems = {
   value: CalculatorType;
   icon: ReactNode;
 };
+
+export type TemperatureType = "celsius" | "fahrenheit" | "kelvin";
