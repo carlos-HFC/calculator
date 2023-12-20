@@ -15,7 +15,11 @@ export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export function convertTemperature(value: number, from: TemperatureType) {
+interface ConvertTemperatureParams {
+  value: number;
+  from: TemperatureType;
+}
+export function convertTemperature({ value, from }: ConvertTemperatureParams) {
   switch (from) {
     case "celsius":
       return {

@@ -15,7 +15,10 @@ export function Temperature() {
   const [temperature, setTemperature] = useState<TemperatureType>("celsius");
 
   const temperatureConverted = useMemo(() => {
-    const value = convertTemperature(Number(display), temperature);
+    const value = convertTemperature({
+      value: Number(display),
+      from: temperature
+    });
 
     delete value[temperature];
     return Object.values(value);
@@ -116,14 +119,14 @@ export function Temperature() {
                 key={i.toString().padEnd(4, '0')}
                 className="text-base text-neutral-400"
               >
-                <strong className="text-white font-semibold">{item.split(' ')[0]}</strong> {item.split(' ')[1]}
+                <span className="text-white font-medium">{item.split(' ')[0]}</span> {item.split(' ')[1]}
               </p>
             ))}
           </div>
         </div>
       </div>
 
-      <Button label="C" bt-type="operation" double onClick={clearDisplay} />
+      <Button className="col-start-2" label="C" bt-type="operation" onClick={clearDisplay} />
       <Button label="⌫" bt-type="operation" onClick={erase} />
 
       <Button label="7" bt-type="number" onClick={() => addCharacter(7)} />
