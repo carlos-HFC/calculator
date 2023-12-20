@@ -16,9 +16,9 @@ const VARIANTS = {
 export function Button({ double, ...props }: ButtonProps) {
   return (
     <button
-      className={classNames(`font-sans text-base xs:text-xl border border-transparent outline-none duration-300 rounded-md cursor-default disabled:pointer-events-none`, double ? 'col-span-2' : '', props.disabled ? VARIANTS['disabled'] : VARIANTS[props["bt-type"]])}
-      children={props.label}
       {...props}
+      className={classNames(`w-full font-sans text-base xs:text-xl border border-transparent outline-none duration-300 rounded-md cursor-default disabled:pointer-events-none`, double ? 'col-span-2' : '', props.disabled ? VARIANTS['disabled'] : VARIANTS[props["bt-type"]], props?.className ?? '')}
+      children={props.label}
     />
   );
 }

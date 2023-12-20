@@ -1,5 +1,7 @@
 "use client";
 
+import { ReactNode } from "react";
+
 import { Calculator } from "../Calculator";
 import { Display } from "../Display";
 import { Temperature } from "../Temperature";
@@ -14,7 +16,7 @@ const VARIANTS: Record<CalculatorType, string> = {
   temperature: "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]",
 };
 
-const CALCULATORS: Record<CalculatorType, any> = {
+const CALCULATORS: Record<CalculatorType, ReactNode> = {
   default: <Calculator />,
   science: <Calculator />,
   temperature: <Temperature />,
