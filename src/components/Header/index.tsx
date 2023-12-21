@@ -31,7 +31,7 @@ export function Header() {
   );
 
   return (
-    <header className="bg-zinc-900 w-full text-white relative">
+    <header className="bg-zinc-900 w-full text-white">
       <nav className="flex mx-auto max-w-7xl items-center justify-between p-4 relative">
         <div className="flex">
           <button
@@ -65,7 +65,7 @@ export function Header() {
         <ul
           id="menu"
           aria-labelledby="menulist"
-          className={classNames("absolute md:relative bg-zinc-900 inset-0 top-full h-[calc(100vh-100%)] flex flex-col md:flex-row md:items-center text-left duration-500 md:translate-x-0", isOpen ? "translate-x-0" : "translate-x-full")}
+          className={classNames("z-1 absolute md:relative bg-zinc-900 inset-0 top-full h-[calc(100vh-100%)] flex flex-col md:flex-row md:items-center text-left duration-500 md:translate-x-0", isOpen ? "translate-x-0" : "translate-x-full")}
         >
           {MENU_ITEMS.map((menu, i) => (
             <li key={i.toString().padStart(4, '0')}>
