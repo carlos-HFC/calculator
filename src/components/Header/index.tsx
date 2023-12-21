@@ -31,7 +31,7 @@ export function Header() {
   );
 
   return (
-    <header className="bg-zinc-900 w-full text-white">
+    <header className="bg-zinc-900 w-full text-white relative">
       <nav className="flex mx-auto max-w-7xl items-center justify-between p-4 relative">
         <div className="flex">
           <button

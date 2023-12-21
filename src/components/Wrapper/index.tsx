@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 
 import { Calculator } from "../Calculator";
 import { Display } from "../Display";
+import { Speed } from "../Speed";
 import { Temperature } from "../Temperature";
 
 import { CalculatorType } from "@/@types";
@@ -14,12 +15,14 @@ const VARIANTS: Record<CalculatorType, string> = {
   default: "grid-cols-4 grid-rows-[1fr_repeat(6,_52px)] xs:grid-rows-[1fr_repeat(6,_64px)]",
   science: "grid-cols-4 grid-rows-[1fr_repeat(7,_52px)] xs:grid-rows-[1fr_repeat(7,_64px)]",
   temperature: "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]",
+  speed: "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]",
 };
 
 const CALCULATORS: Record<CalculatorType, ReactNode> = {
   default: <Calculator />,
   science: <Calculator />,
   temperature: <Temperature />,
+  speed: <Speed />,
 };
 
 export function Wrapper() {

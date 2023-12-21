@@ -5,6 +5,7 @@ import { classNames } from "@/utils";
 const VARIANTS = (type: CalculatorType) => {
   switch (type) {
     case "temperature":
+    case "speed":
       return 'text-5xl py-6'
     case "default":
     case "science":
