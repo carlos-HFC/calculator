@@ -8,7 +8,7 @@ export function Select(props: SelectProps) {
   return (
     <select
       {...props}
-      className={classNames("text-white text-sm w-max bg-transparent temp-select border-white pr-8 appearance-none border-0 outline-none", props?.className ?? '')}
+      className={classNames("text-white text-sm w-max bg-transparent border-white pr-8 appearance-none border-0 outline-0 temp-select bg-no-repeat bg-[length:1rem] bg-right", props?.className ?? '')}
     />
   );
 }
