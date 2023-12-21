@@ -11,7 +11,7 @@ import { useCalculator } from "@/contexts/Calculator";
 import { convertSpeed } from "@/utils";
 
 const OPTIONS = [
-  { label: "Metros por segundo", value: "meter-seconds" },
+  { label: "Metros por segundo", value: "meters-second" },
   { label: "Quilômetros por hora", value: "km-hour" },
   { label: "Milhas por hora", value: "miles-hour" },
   { label: "Nós", value: "knos" },
@@ -22,7 +22,7 @@ export function Speed() {
   const { display, setDisplay } = useCalculator();
 
   const [conversion, setConversion] = useState<ChooseConversion<SpeedType>>({
-    from: "meter-seconds",
+    from: "meters-second",
     to: "km-hour"
   });
 
@@ -41,8 +41,6 @@ export function Speed() {
         case 'Escape':
         case 'Delete':
           return clearDisplay();
-        case '-':
-          return addCharacter('-');
         case ',':
         case '.':
           return addCharacter('.');
@@ -91,11 +89,7 @@ export function Speed() {
   const addCharacter = useCallback(
     (character: string | number) => {
       setDisplay(prev => {
-        if (
-          (character === '.' && prev.includes('.')) ||
-          (character === '-' && prev.includes('-')) ||
-          (character === '-' && prev !== '0')
-        ) return prev;
+        if (character === '.' && prev.includes('.')) return prev;
 
         return prev === '0'
           ? `${character}`

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type CalculatorType = "default" | "science" | "temperature" | "speed";
+export type CalculatorType = "default" | "science" | "temperature" | "speed" | "length";
 
 export type MenuItems = {
   label: string;
@@ -22,4 +22,6 @@ export type ChooseConversion<T> = {
   to: T;
 };
 
-export type SpeedType = "meter-seconds" | "km-hour" | "miles-hour" | "knos" | "mach";
+export type SpeedType = "meters-second" | "km-hour" | "miles-hour" | "knos" | "mach";
+
+export type LengthType = "milimeter" | "centimeter" | "meter" | "kilometer" | "mile" | "yard" | "foot" | "inch";
