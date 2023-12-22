@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { MdMenu } from 'react-icons/md';
 
 import { CalculatorType } from "@/@types";
@@ -9,7 +9,7 @@ import { MENU_ITEMS } from "@/constants";
 import { useCalculator } from "@/contexts/Calculator";
 import { classNames } from "@/utils";
 
-export function Header() {
+export const Header = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { type, handleType } = useCalculator();
@@ -82,4 +82,4 @@ export function Header() {
       </nav>
     </header>
   );
-}
+})
