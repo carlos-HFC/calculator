@@ -6,33 +6,30 @@ import { MdSync } from "react-icons/md";
 import { Button } from "../Button";
 import { Select } from "../Select";
 
-import { ChooseConversion, LengthType } from "@/@types";
+import { ChooseConversion, WeightType } from "@/@types";
 import { useCalculator } from "@/contexts/Calculator";
-import { convertLength } from "@/utils";
+import { convertWeight } from "@/utils";
 
 const OPTIONS = [
-  { label: "Nanômetro", value: "nanometer" },
-  { label: "Micrômetro", value: "micrometer" },
-  { label: "Milímetro", value: "millimeter" },
-  { label: "Centímetro", value: "centimeter" },
-  { label: "Metro", value: "meter" },
-  { label: "Quilômetro", value: "kilometer" },
-  { label: "Milha", value: "mile" },
-  { label: "Pé", value: "foot" },
-  { label: "Jarda", value: "yard" },
-  { label: "Polegada", value: "inch" },
+  { label: "Quilates", value: "carat" },
+  { label: "Miligramas", value: "milligram" },
+  { label: "Gramas", value: "gram" },
+  { label: "Quilogramas", value: "kilogram" },
+  { label: "Onças", value: "ounce" },
+  { label: "Libras", value: "pound" },
+  { label: "Toneladas", value: "ton" },
 ];
 
-export function Length() {
+export function Weight() {
   const { display, setDisplay } = useCalculator();
 
-  const [conversion, setConversion] = useState<ChooseConversion<LengthType>>({
-    from: "centimeter",
-    to: "meter"
+  const [conversion, setConversion] = useState<ChooseConversion<WeightType>>({
+    from: "gram",
+    to: "kilogram"
   });
 
-  const lengthConverted = useMemo(() => {
-    const value = convertLength({
+  const weightConverted = useMemo(() => {
+    const value = convertWeight({
       value: Number(display),
       ...conversion
     }) as string;
@@ -41,7 +38,7 @@ export function Length() {
       minimumFractionDigits: 0,
       maximumFractionDigits: 6
     })
-
+    
     const num = value?.split(' ')[0];
     const measure = value?.split(' ')[1];
 
@@ -140,7 +137,7 @@ export function Length() {
         <div className="relative flex flex-col gap-2 w-full justify-center">
           <Select
             value={conversion.from}
-            onChange={e => setConversion(prev => ({ ...prev, from: e.target.value as LengthType }))}
+            onChange={e => setConversion(prev => ({ ...prev, from: e.target.value as WeightType }))}
           >
             {OPTIONS.map((option, i) => (
               <option
@@ -155,7 +152,7 @@ export function Length() {
 
           <Select
             value={conversion.to}
-            onChange={e => setConversion(prev => ({ ...prev, to: e.target.value as LengthType }))}
+            onChange={e => setConversion(prev => ({ ...prev, to: e.target.value as WeightType }))}
           >
             {OPTIONS.map((option, i) => (
               <option
@@ -182,7 +179,7 @@ export function Length() {
           </small>
 
           <div className="flex flex-row gap-6">
-            {lengthConverted}
+            {weightConverted}
           </div>
         </div>
       </div>

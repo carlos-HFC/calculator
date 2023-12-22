@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -27,5 +27,10 @@ export const MENU_ITEMS: Array<MenuItems> = [
     label: "Comprimento",
     value: "length",
     icon: <MdStraighten size={16} />
+  },
+  {
+    label: "Peso e massa",
+    value: "weight",
+    icon: <MdScale size={16} />
   },
 ];

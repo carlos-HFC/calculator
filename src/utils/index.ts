@@ -1,4 +1,4 @@
-import { ConvertMeasureParams, LengthType, SpeedType, TemperatureType } from "@/@types";
+import { ConvertMeasureParams, LengthType, SpeedType, TemperatureType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -185,5 +185,66 @@ export function convertLength({ value, from, to }: ConvertMeasureParams<LengthTy
       if (to === 'yard') return `${value * 0.027778} yd`;
       if (to === 'foot') return `${value * 0.083333} ft`;
       if (to === 'inch') return `${value} in`;
+  }
+}
+
+export function convertWeight({ value, from, to }: ConvertMeasureParams<WeightType, 'to'>) {
+  switch (from) {
+    case "carat":
+      if (to === 'carat') return `${value} ct`;
+      if (to === 'milligram') return `${value * 200} mg`;
+      if (to === 'gram') return `${value * 0.2} g`;
+      if (to === 'kilogram') return `${value * 0.0002} kg`;
+      if (to === 'ounce') return `${value * 0.007055} oz`;
+      if (to === 'pound') return `${value * 0.000441} lbs`;
+      if (to === 'ton') return `${value * 0.0000002} t`;
+    case "milligram":
+      if (to === 'carat') return `${value * 0.005} ct`;
+      if (to === 'milligram') return `${value} mg`;
+      if (to === 'gram') return `${value * 0.001} g`;
+      if (to === 'kilogram') return `${value * 0.000001} kg`;
+      if (to === 'ounce') return `${value * 0.000035274} oz`;
+      if (to === 'pound') return `${value * 0.0000022046} lbs`;
+      if (to === 'ton') return `${value * 0.000000001} t`;
+    case "gram":
+      if (to === 'carat') return `${value * 5} ct`;
+      if (to === 'milligram') return `${value * 1000} mg`;
+      if (to === 'gram') return `${value} g`;
+      if (to === 'kilogram') return `${value * 0.001} kg`;
+      if (to === 'ounce') return `${value * 0.035274} oz`;
+      if (to === 'pound') return `${value * 0.002205} lbs`;
+      if (to === 'ton') return `${value * 0.000001} t`;
+    case "kilogram":
+      if (to === 'carat') return `${value * 5000} ct`;
+      if (to === 'milligram') return `${value * 1000000} mg`;
+      if (to === 'gram') return `${value * 1000} g`;
+      if (to === 'kilogram') return `${value} kg`;
+      if (to === 'ounce') return `${value * 35.273962} oz`;
+      if (to === 'pound') return `${value * 2.204623} lbs`;
+      if (to === 'ton') return `${value * 0.001} t`;
+    case "ounce":
+      if (to === 'carat') return `${value * 141.747616} ct`;
+      if (to === 'milligram') return `${value * 28350} mg`;
+      if (to === 'gram') return `${value * 28.349523} g`;
+      if (to === 'kilogram') return `${value * 0.02835} kg`;
+      if (to === 'ounce') return `${value} oz`;
+      if (to === 'pound') return `${value * 0.0625} lbs`;
+      if (to === 'ton') return `${value * 0.00002835} t`;
+    case "pound":
+      if (to === 'carat') return `${value * 2268} ct`;
+      if (to === 'milligram') return `${value * 453592} mg`;
+      if (to === 'gram') return `${value * 453.59237} g`;
+      if (to === 'kilogram') return `${value * 0.453592} kg`;
+      if (to === 'ounce') return `${value * 16} oz`;
+      if (to === 'pound') return `${value} lbs`;
+      if (to === 'ton') return `${value * 0.000454} t`;
+    case "ton":
+      if (to === 'carat') return `${value * 5000000} ct`;
+      if (to === 'milligram') return `${value * 1000000000} mg`;
+      if (to === 'gram') return `${value * 1000000} g`;
+      if (to === 'kilogram') return `${value * 1000} kg`;
+      if (to === 'ounce') return `${value * 35274} oz`;
+      if (to === 'pound') return `${value * 2205} lbs`;
+      if (to === 'ton') return `${value} t`;
   }
 }

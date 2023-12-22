@@ -7,6 +7,7 @@ import { Display } from "../Display";
 import { Length } from "../Length";
 import { Speed } from "../Speed";
 import { Temperature } from "../Temperature";
+import { Weight } from "../Weight";
 
 import { CalculatorType } from "@/@types";
 import { useCalculator } from "@/contexts/Calculator";
@@ -18,6 +19,7 @@ const VARIANTS: Record<CalculatorType, string> = {
   temperature: "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]",
   speed: "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]",
   length: "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]",
+  weight: "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]",
 };
 
 const CALCULATORS: Record<CalculatorType, ReactNode> = {
@@ -26,15 +28,14 @@ const CALCULATORS: Record<CalculatorType, ReactNode> = {
   temperature: <Temperature />,
   speed: <Speed />,
   length: <Length />,
+  weight: <Weight />,
 };
 
 export function Wrapper() {
   const { type } = useCalculator();
 
   return (
-    <div
-      className={classNames(`bg-[#202020] p-1 grid gap-1 border border-[#3f4046] rounded-lg h-auto w-full sm:w-[420px]`, VARIANTS[type ?? 'default'])}
-    >
+    <div className={classNames(`bg-[#202020] p-1 grid gap-1 border border-[#3f4046] rounded-lg h-auto w-full sm:w-[420px]`, VARIANTS[type ?? 'default'])}>
       <Display />
       {CALCULATORS[type ?? 'default']}
     </div>

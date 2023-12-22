@@ -7,6 +7,7 @@ const VARIANTS = (type: CalculatorType) => {
     case "temperature":
     case "speed":
     case "length":
+    case "weight":
       return 'text-5xl py-6'
     case "default":
     case "science":
