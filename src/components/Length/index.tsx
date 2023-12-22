@@ -11,7 +11,9 @@ import { useCalculator } from "@/contexts/Calculator";
 import { convertLength } from "@/utils";
 
 const OPTIONS = [
-  { label: "Milímetro", value: "milimeter" },
+  { label: "Nanômetro", value: "nanometer" },
+  { label: "Micrômetro", value: "micrometer" },
+  { label: "Milímetro", value: "millimeter" },
   { label: "Centímetro", value: "centimeter" },
   { label: "Metro", value: "meter" },
   { label: "Quilômetro", value: "kilometer" },
@@ -30,10 +32,23 @@ export function Length() {
   });
 
   const lengthConverted = useMemo(() => {
-    return convertLength({
+    const value = convertLength({
       value: Number(display),
       ...conversion
-    });
+    }) as string;
+
+    const num = value?.split(' ')[0];
+    const measure = value?.split(' ')[1];
+
+    return (
+      <>
+        <span className="text-white font-medium">
+          {num?.includes('e')
+            ? <>{Intl.NumberFormat('pt-BR', { maximumFractionDigits: 6 }).format(Number(num.split('e')[0]))} x 10<sup>{num.split('e')[1]}</sup></>
+            : <>{Intl.NumberFormat('pt-BR', { maximumFractionDigits: 6 }).format(Number(num))}</>}
+        </span> {measure}
+      </>
+    );
   }, [display, conversion]);
 
   useEffect(() => {
@@ -162,10 +177,8 @@ export function Length() {
           </small>
 
           <div className="flex flex-row gap-6">
-            <p
-              className="text-base text-neutral-400"
-            >
-              <span className="text-white font-medium">{lengthConverted?.split(" ")[0]}</span> {lengthConverted?.split(" ")[1]}
+            <p className="text-base text-neutral-400">
+              {lengthConverted}
             </p>
           </div>
         </div>

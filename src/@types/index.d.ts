@@ -24,4 +24,4 @@ export type ChooseConversion<T> = {
 
 export type SpeedType = "meters-second" | "km-hour" | "miles-hour" | "knos" | "mach";
 
-export type LengthType = "milimeter" | "centimeter" | "meter" | "kilometer" | "mile" | "yard" | "foot" | "inch";
+export type LengthType = "nanometer" | "micrometer" | "millimeter" | "centimeter" | "meter" | "kilometer" | "mile" | "yard" | "foot" | "inch";
