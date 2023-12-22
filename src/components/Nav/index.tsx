@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import { MdMenu } from "react-icons/md";
 
 import { CalculatorType } from "@/@types";
@@ -7,10 +7,19 @@ import { MENU_ITEMS } from "@/constants";
 import { useCalculator } from "@/contexts/Calculator";
 import { classNames } from "@/utils";
 
-export function Nav() {
+export const Nav = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { type, handleType } = useCalculator();
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) setIsOpen(false);
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  });
 
   useEffect(() => {
     if (isOpen) {
@@ -29,7 +38,7 @@ export function Nav() {
   );
 
   return (
-    <nav className="flex mx-auto max-w-7xl items-center justify-between p-4 relative">
+    <nav className="flex mx-auto max-w-7xl items-center justify-between p-4">
       <div className="flex">
         <button
           className="relative flex w-10 h-10 border-0 outline-none"
@@ -45,7 +54,7 @@ export function Nav() {
         </button>
       </div>
 
-      <div className="flex md:hidden">
+      <div className="flex">
         <button
           onClick={() => setIsOpen(prev => !prev)}
           aria-hidden="true"
@@ -53,21 +62,27 @@ export function Nav() {
           id="menulist"
         >
           <MdMenu
-            size={24}
+            size={32}
             aria-label="Abrir e fechar menu"
           />
         </button>
       </div>
 
+      <div
+        className={classNames("bg-zinc-900/40 w-full duration-300 absolute top-full inset-0 h-[calc(100vh-100%)] flex justify-end", isOpen ? "opacity-100 z-10" : "opacity-0 -z-10 pointer-events-none")}
+        onClick={() => setIsOpen(false)}
+      />
+
       <ul
         id="menu"
         aria-labelledby="menulist"
-        className={classNames("z-1 absolute md:relative bg-zinc-900 inset-0 top-full h-[calc(100vh-100%)] flex flex-col md:flex-row md:items-center text-left duration-500 md:translate-x-0", isOpen ? "translate-x-0" : "translate-x-full")}
+        className={classNames("bg-zinc-900 absolute duration-500 top-full right-0 h-[calc(100vh-100%)] flex flex-col text-left w-full md:w-1/3 z-10", isOpen ? "translate-x-0" : "translate-x-full")}
+        onClick={e => e.stopPropagation()}
       >
         {MENU_ITEMS.map((menu, i) => (
           <li key={i.toString().padStart(4, '0')}>
             <button
-              className={classNames("border-0 outline-none text-left w-full cursor-pointer md:rounded duration-[250ms] md:w-max px-4 md:px-4 py-6 md:py-3 text-lg md:text-base flex items-center gap-1", menu.value === type ? "bg-zinc-700" : "hover:bg-zinc-800")}
+              className={classNames("border-0 outline-none text-left w-full cursor-pointer duration-[250ms] px-4 py-6 text-lg flex items-center gap-1", menu.value === type ? "bg-zinc-700" : "hover:bg-zinc-800")}
               onClick={() => changeType(menu.value)}
             >
               {menu.icon}
@@ -78,4 +93,4 @@ export function Nav() {
       </ul>
     </nav>
   );
-}
+});
