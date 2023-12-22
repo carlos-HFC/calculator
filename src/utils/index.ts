@@ -15,26 +15,20 @@ export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export function convertTemperature({ value, from }: ConvertMeasureParams<TemperatureType>) {
+export function convertTemperature({ value, from, to }: ConvertMeasureParams<TemperatureType, 'to'>) {
   switch (from) {
     case "celsius":
-      return {
-        celsius: `${parseFloat((value).toFixed(2))} ºC`,
-        fahrenheit: `${parseFloat(((value * (9 / 5)) + 32).toFixed(2))} ºF`,
-        kelvin: `${parseFloat((value + 273.15).toFixed(2))} K`,
-      };
+      if (to === 'celsius') return `${parseFloat((value).toFixed(2))} ºC`;
+      if (to === 'fahrenheit') return `${parseFloat(((value * (9 / 5)) + 32).toFixed(2))} ºF`;
+      if (to === 'kelvin') return `${parseFloat((value + 273.15).toFixed(2))} K`;
     case "fahrenheit":
-      return {
-        celsius: `${parseFloat(((value - 32) * (5 / 9)).toFixed(2))} ºC`,
-        fahrenheit: `${parseFloat((value).toFixed(2))} ºF`,
-        kelvin: `${parseFloat(((value - 32) * (5 / 9) + 273.15).toFixed(2))} K`,
-      };
+      if (to === 'celsius') return `${parseFloat(((value - 32) * (5 / 9)).toFixed(2))} ºC`;
+      if (to === 'fahrenheit') return `${parseFloat((value).toFixed(2))} ºF`;
+      if (to === 'kelvin') return `${parseFloat(((value - 32) * (5 / 9) + 273.15).toFixed(2))} K`;
     case "kelvin":
-      return {
-        celsius: `${parseFloat((value - 237.15).toFixed(2))} ºC`,
-        fahrenheit: `${parseFloat(((value - 273.15) * (9 / 5) + 32).toFixed(2))} ºF`,
-        kelvin: `${parseFloat((value).toFixed(2))} K`,
-      };
+      if (to === 'celsius') return `${parseFloat((value - 237.15).toFixed(2))} ºC`;
+      if (to === 'fahrenheit') return `${parseFloat(((value - 273.15) * (9 / 5) + 32).toFixed(2))} ºF`;
+      if (to === 'kelvin') return `${parseFloat((value).toFixed(2))} K`;
   }
 }
 

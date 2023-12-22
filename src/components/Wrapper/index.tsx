@@ -3,15 +3,13 @@
 import { ReactNode } from "react";
 
 import { Calculator } from "../Calculator";
+import { Conversor } from "../Conversor";
 import { Display } from "../Display";
-import { Length } from "../Length";
-import { Speed } from "../Speed";
-import { Temperature } from "../Temperature";
-import { Weight } from "../Weight";
 
-import { CalculatorType } from "@/@types";
+import { CalculatorType, LengthType, SpeedType, TemperatureType, WeightType } from "@/@types";
+import { LENGTH_OPTIONS, SPEED_OPTIONS, TEMPERATURE_OPTIONS, WEIGHT_OPTIONS } from "@/constants";
 import { useCalculator } from "@/contexts/Calculator";
-import { classNames } from "@/utils";
+import { classNames, convertLength, convertSpeed, convertTemperature, convertWeight } from "@/utils";
 
 const VARIANTS: Record<CalculatorType, string> = {
   default: "grid-cols-4 grid-rows-[1fr_repeat(6,_52px)] xs:grid-rows-[1fr_repeat(6,_64px)]",
@@ -25,10 +23,46 @@ const VARIANTS: Record<CalculatorType, string> = {
 const CALCULATORS: Record<CalculatorType, ReactNode> = {
   default: <Calculator />,
   science: <Calculator />,
-  temperature: <Temperature />,
-  speed: <Speed />,
-  length: <Length />,
-  weight: <Weight />,
+  temperature: (
+    <Conversor<TemperatureType>
+      chooseConversion={convertTemperature}
+      list={TEMPERATURE_OPTIONS}
+      initialValue={{
+        from: "celsius",
+        to: "fahrenheit"
+      }}
+    />
+  ),
+  speed: (
+    <Conversor<SpeedType>
+      chooseConversion={convertSpeed}
+      list={SPEED_OPTIONS}
+      initialValue={{
+        from: "meters-second",
+        to: "km-hour"
+      }}
+    />
+  ),
+  length: (
+    <Conversor<LengthType>
+      chooseConversion={convertLength}
+      list={LENGTH_OPTIONS}
+      initialValue={{
+        from: "centimeter",
+        to: "meter"
+      }}
+    />
+  ),
+  weight: (
+    <Conversor<WeightType>
+      chooseConversion={convertWeight}
+      list={WEIGHT_OPTIONS}
+      initialValue={{
+        from: "gram",
+        to: "kilogram"
+      }}
+    />
+  ),
 };
 
 export function Wrapper() {

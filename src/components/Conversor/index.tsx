@@ -1,44 +1,42 @@
 "use client";
 
-import { useMemo, useEffect, useCallback, useState } from "react";
+import { useState, useEffect, useCallback, useMemo, ChangeEvent } from "react";
 import { MdSync } from "react-icons/md";
 
 import { Button } from "../Button";
 import { Select } from "../Select";
 
-import { ChooseConversion, WeightType } from "@/@types";
+import { ChooseConversion, ConvertMeasureParams } from "@/@types";
 import { useCalculator } from "@/contexts/Calculator";
-import { convertWeight } from "@/utils";
 
-const OPTIONS = [
-  { label: "Quilates", value: "carat" },
-  { label: "Miligramas", value: "milligram" },
-  { label: "Gramas", value: "gram" },
-  { label: "Quilogramas", value: "kilogram" },
-  { label: "Onças", value: "ounce" },
-  { label: "Libras", value: "pound" },
-  { label: "Toneladas", value: "ton" },
-];
+interface ConversorProps<T> {
+  chooseConversion(params: ConvertMeasureParams<T, 'to'>): string | undefined;
+  list: {
+    label: string;
+    value: string;
+  }[];
+  initialValue: {
+    from: T;
+    to: T;
+  };
+}
 
-export function Weight() {
-  const { display, setDisplay } = useCalculator();
+export function Conversor<T>(props: ConversorProps<T>) {
+  const { display, setDisplay, type } = useCalculator();
 
-  const [conversion, setConversion] = useState<ChooseConversion<WeightType>>({
-    from: "gram",
-    to: "kilogram"
-  });
+  const [conversion, setConversion] = useState<ChooseConversion<T>>(props.initialValue);
 
-  const weightConverted = useMemo(() => {
-    const value = convertWeight({
+  const valueConverted = useMemo(() => {
+    const value = props.chooseConversion({
       value: Number(display),
       ...conversion
-    }) as string;
+    });
 
     const formatNum = Intl.NumberFormat('pt-BR', {
       minimumFractionDigits: 0,
       maximumFractionDigits: 6
-    })
-    
+    });
+
     const num = value?.split(' ')[0];
     const measure = value?.split(' ')[1];
 
@@ -92,6 +90,20 @@ export function Weight() {
     return () => document.removeEventListener('keydown', onKeyDown);
   });
 
+  useEffect(() => {
+    setConversion(props.initialValue);
+  }, [type]);
+
+  const onChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      setConversion(prev => ({
+        ...prev,
+        [event.target.name]: event.target.value
+      }));
+    },
+    []
+  );
+
   const clearDisplay = useCallback(
     () => {
       setDisplay('0');
@@ -136,12 +148,13 @@ export function Weight() {
       <div className="col-span-full flex flex-col items-start px-4 justify-end pb-2 gap-2">
         <div className="relative flex flex-col gap-2 w-full justify-center">
           <Select
-            value={conversion.from}
-            onChange={e => setConversion(prev => ({ ...prev, from: e.target.value as WeightType }))}
+            name="from"
+            value={conversion.from as string}
+            onChange={onChange}
           >
-            {OPTIONS.map((option, i) => (
+            {props.list.map((option, i) => (
               <option
-                key={i.toString().concat('option_from')}
+                key={`${option.label}-from-${i}`}
                 value={option.value}
                 disabled={conversion.to === option.value}
               >
@@ -151,12 +164,13 @@ export function Weight() {
           </Select>
 
           <Select
-            value={conversion.to}
-            onChange={e => setConversion(prev => ({ ...prev, to: e.target.value as WeightType }))}
+            name="to"
+            value={conversion.to as string}
+            onChange={onChange}
           >
-            {OPTIONS.map((option, i) => (
+            {props.list.map((option, i) => (
               <option
-                key={i.toString().concat('option_to')}
+                key={`${option.label}-to-${i}`}
                 value={option.value}
                 disabled={conversion.from === option.value}
               >
@@ -179,7 +193,7 @@ export function Weight() {
           </small>
 
           <div className="flex flex-row gap-6">
-            {weightConverted}
+            {valueConverted}
           </div>
         </div>
       </div>
