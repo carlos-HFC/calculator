@@ -1,4 +1,4 @@
-import { ConvertMeasureParams, LengthType, SpeedType, TemperatureType, WeightType } from "@/@types";
+import { ConvertMeasureParams, LengthType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -240,5 +240,26 @@ export function convertWeight({ value, from, to }: ConvertMeasureParams<WeightTy
       if (to === 'ounce') return `${value * 35274} oz`;
       if (to === 'pound') return `${value * 2205} lbs`;
       if (to === 'ton') return `${value} t`;
+  }
+}
+
+export function convertVolume({ value, from, to }: ConvertMeasureParams<VolumeType, 'to'>) {
+  switch (from) {
+    case "milliliter":
+    case "cubic-centimeter":
+      if (to === 'milliliter') return `${value} mL`;
+      if (to === 'cubic-centimeter') return `${value} cm³`;
+      if (to === 'liter') return `${value * 0.001} L`;
+      if (to === 'cubic-meter') return `${value * 0.000001} m³`;
+    case "liter":
+      if (to === 'milliliter') return `${value * 1000} mL`;
+      if (to === 'cubic-centimeter') return `${value * 1000} cm³`;
+      if (to === 'liter') return `${value} L`;
+      if (to === 'cubic-meter') return `${value * 0.001} m³`;
+    case "cubic-meter":
+      if (to === 'milliliter') return `${value * 1000000} mL`;
+      if (to === 'cubic-centimeter') return `${value * 1000000} cm³`;
+      if (to === 'liter') return `${value * 1000} L`;
+      if (to === 'cubic-meter') return `${value} m³`;
   }
 }

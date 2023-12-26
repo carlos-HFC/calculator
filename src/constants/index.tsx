@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale,MdWaterDrop } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -33,6 +33,11 @@ export const MENU_ITEMS: Array<MenuItems> = [
     value: "weight",
     icon: <MdScale size={16} />
   },
+  {
+    label: "Volume",
+    value: "volume",
+    icon: <MdWaterDrop size={16} />
+  },
 ];
 
 export const WEIGHT_OPTIONS = [
@@ -62,7 +67,7 @@ export const TEMPERATURE_OPTIONS = [
   { label: "Celsius", value: "celsius" },
   { label: "Fahrenheit", value: "fahrenheit" },
   { label: "Kelvin", value: "kelvin" },
-]
+];
 
 export const SPEED_OPTIONS = [
   { label: "Metros por segundo", value: "meters-second" },
@@ -70,4 +75,11 @@ export const SPEED_OPTIONS = [
   { label: "Milhas por hora", value: "miles-hour" },
   { label: "Nós", value: "knos" },
   { label: "Mach", value: "mach" },
+];
+
+export const VOLUME_OPTIONS = [
+  { label: "Mililitros", value: "milliliter" },
+  { label: "Centímentos cúbicos", value: "cubic-centimeter" },
+  { label: "Litros", value: "liter" },
+  { label: "Metros cúbicos", value: "cubic-meter" },
 ];
