@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdBolt, MdNetworkCheck, MdDirectionsRun } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -46,12 +46,17 @@ export const MENU_ITEMS: Array<MenuItems> = [
   {
     label: "Potência",
     value: "power",
-    icon: <MdBolt size={16} />
+    icon: <MdPower size={16} />
   },
   {
     label: "Pressão",
     value: "pressure",
     icon: <MdSpeed size={16} />
+  },
+  {
+    label: "Energia",
+    value: "energy",
+    icon: <MdElectricBolt size={16} />
   },
 ];
 
@@ -121,4 +126,14 @@ export const PRESSURE_OPTIONS = [
   { label: "Atmosferas", value: "atmosphere" },
   { label: "Bars", value: "bar" },
   { label: "Kg por metro quadrado", value: "kg-per-meter" },
+];
+
+export const ENERGY_OPTIONS = [
+  { label: "Joules", value: "joule" },
+  { label: "Quilojoules", value: "kilojoule" },
+  { label: "Megajoules", value: "megajoule" },
+  { label: "Calorias térmicas", value: "calorie" },
+  { label: "Calorias alimentares", value: "kilocalorie" },
+  { label: "Quilowatt hora", value: "kilowatt-hour" },
+  { label: "Elétrons-volts", value: "electronvolt" },
 ];

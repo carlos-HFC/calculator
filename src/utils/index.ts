@@ -1,4 +1,4 @@
-import { AreaType, ConvertMeasureParams, LengthType, PowerType, PressureType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
+import { AreaType, ConvertMeasureParams, EnergyType, LengthType, PowerType, PressureType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -372,5 +372,66 @@ export function convertPressure({ value, from, to }: ConvertMeasureParams<Pressu
       if (to === 'atmosphere') return `${value * 0.967841} atm`;
       if (to === 'bar') return `${value * 0.980665} bar`;
       if (to === 'kg-per-meter') return `${value} kgf/m²`;
+  }
+}
+
+export function convertEnergy({ value, from, to }: ConvertMeasureParams<EnergyType, 'to'>) {
+  switch (from) {
+    case "joule":
+      if (to === 'joule') return `${value} J`;
+      if (to === 'kilojoule') return `${value * 0.001} kJ`;
+      if (to === 'megajoule') return `${value * 0.000001} MJ`;
+      if (to === 'calorie') return `${value * 0.239006} cal`;
+      if (to === 'kilocalorie') return `${value * 0.000239} kcal`;
+      if (to === 'kilowatt-hour') return `${value * 0.00000027778} kWh`;
+      if (to === 'electronvolt') return `${value * 6241500000000000000} eV`;
+    case "kilojoule":
+      if (to === 'joule') return `${value * 1000} J`;
+      if (to === 'kilojoule') return `${value} kJ`;
+      if (to === 'megajoule') return `${value * 0.001} MJ`;
+      if (to === 'calorie') return `${value * 239.005736} cal`;
+      if (to === 'kilocalorie') return `${value * 0.239006} kcal`;
+      if (to === 'kilowatt-hour') return `${value * 0.000278} kWh`;
+      if (to === 'electronvolt') return `${value * 62415499999999999606784} eV`;
+    case "megajoule":
+      if (to === 'joule') return `${value * 1000000} J`;
+      if (to === 'kilojoule') return `${value * 1000} kJ`;
+      if (to === 'megajoule') return `${value} MJ`;
+      if (to === 'calorie') return `${value * 239006} cal`;
+      if (to === 'kilocalorie') return `${value * 239.005736} kcal`;
+      if (to === 'kilowatt-hour') return `${value * 0.2777778} kWh`;
+      if (to === 'electronvolt') return `${value * 6241499999999999833276416} eV`;
+    case "calorie":
+      if (to === 'joule') return `${value * 4.184} J`;
+      if (to === 'kilojoule') return `${value * 0.004184} kJ`;
+      if (to === 'megajoule') return `${value * 0.000004184} MJ`;
+      if (to === 'calorie') return `${value} cal`;
+      if (to === 'kilocalorie') return `${value * 0.001} kcal`;
+      if (to === 'kilowatt-hour') return `${value * 0.0000011622} kWh`;
+      if (to === 'electronvolt') return `${value * 26114000000000000000} eV`;
+    case "kilocalorie":
+      if (to === 'joule') return `${value * 4184} J`;
+      if (to === 'kilojoule') return `${value * 4.184} kJ`;
+      if (to === 'megajoule') return `${value * 0.004184} MJ`;
+      if (to === 'calorie') return `${value * 1000} cal`;
+      if (to === 'kilocalorie') return `${value} kcal`;
+      if (to === 'kilowatt-hour') return `${value * 0.001162} kWh`;
+      if (to === 'electronvolt') return `${value * 26113999999999999475712} eV`;
+    case "kilowatt-hour":
+      if (to === 'joule') return `${value * 3600000} J`;
+      if (to === 'kilojoule') return `${value * 3600} kJ`;
+      if (to === 'megajoule') return `${value * 3.6} MJ`;
+      if (to === 'calorie') return `${value * 860421} cal`;
+      if (to === 'kilocalorie') return `${value * 860.421} kcal`;
+      if (to === 'kilowatt-hour') return `${value} kWh`;
+      if (to === 'electronvolt') return `${value * 22469000000000001323302912} eV`;
+    case "electronvolt":
+      if (to === 'joule') return `${value * 0.00000000000000000016022} J`;
+      if (to === 'kilojoule') return `${value * 0.00000000000000000000016022} kJ`;
+      if (to === 'megajoule') return `${value * 0.00000000000000000000000016022} MJ`;
+      if (to === 'calorie') return `${value * 0.000000000000000000038293} cal`;
+      if (to === 'kilocalorie') return `${value * 0.000000000000000000000038293} kcal`;
+      if (to === 'kilowatt-hour') return `${value * 0.000000000000000000000000044505} kWh`;
+      if (to === 'electronvolt') return `${value} eV`;
   }
 }

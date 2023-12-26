@@ -6,10 +6,10 @@ import { Calculator } from "../Calculator";
 import { Conversor } from "../Conversor";
 import { Display } from "../Display";
 
-import { AreaType, CalculatorType, LengthType, PowerType, PressureType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
-import { AREA_OPTIONS, LENGTH_OPTIONS, POWER_OPTIONS, PRESSURE_OPTIONS, SPEED_OPTIONS, TEMPERATURE_OPTIONS, VOLUME_OPTIONS, WEIGHT_OPTIONS } from "@/constants";
+import { AreaType, CalculatorType, EnergyType, LengthType, PowerType, PressureType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
+import { AREA_OPTIONS, ENERGY_OPTIONS, LENGTH_OPTIONS, POWER_OPTIONS, PRESSURE_OPTIONS, SPEED_OPTIONS, TEMPERATURE_OPTIONS, VOLUME_OPTIONS, WEIGHT_OPTIONS } from "@/constants";
 import { useCalculator } from "@/contexts/Calculator";
-import { classNames, convertArea, convertLength, convertPower, convertPressure, convertSpeed, convertTemperature, convertVolume, convertWeight } from "@/utils";
+import { classNames, convertArea, convertEnergy, convertLength, convertPower, convertPressure, convertSpeed, convertTemperature, convertVolume, convertWeight } from "@/utils";
 
 const VARIANTS = (type: CalculatorType) => {
   switch (type) {
@@ -20,6 +20,7 @@ const VARIANTS = (type: CalculatorType) => {
     case "volume":
     case "area":
     case "power":
+    case "energy":
     case "pressure":
       return "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]";
     case "default":
@@ -109,6 +110,16 @@ const CALCULATORS: Record<CalculatorType, ReactNode> = {
       initialValue={{
         from: "atmosphere",
         to: "bar"
+      }}
+    />
+  ),
+  energy: (
+    <Conversor<EnergyType>
+      chooseConversion={convertEnergy}
+      list={ENERGY_OPTIONS}
+      initialValue={{
+        from: "joule",
+        to: "kilocalorie"
       }}
     />
   ),
