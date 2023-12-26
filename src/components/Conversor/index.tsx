@@ -34,7 +34,7 @@ export function Conversor<T>(props: ConversorProps<T>) {
 
     const formatNum = Intl.NumberFormat('pt-BR', {
       minimumFractionDigits: 0,
-      maximumFractionDigits: 6
+      maximumFractionDigits: type !== 'time' ? 6 : 2
     });
 
     const num = value?.split(' ')[0];
