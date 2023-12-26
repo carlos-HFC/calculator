@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale,MdWaterDrop } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -37,6 +37,11 @@ export const MENU_ITEMS: Array<MenuItems> = [
     label: "Volume",
     value: "volume",
     icon: <MdWaterDrop size={16} />
+  },
+  {
+    label: "Área",
+    value: "area",
+    icon: <MdSquareFoot size={16} />
   },
 ];
 
@@ -82,4 +87,14 @@ export const VOLUME_OPTIONS = [
   { label: "Centímentos cúbicos", value: "cubic-centimeter" },
   { label: "Litros", value: "liter" },
   { label: "Metros cúbicos", value: "cubic-meter" },
+];
+
+export const AREA_OPTIONS = [
+  { label: "Milhas quadradas", value: "square-mile" },
+  { label: "Acre", value: "acre" },
+  { label: "Quilômetros quadrados", value: "square-kilometer" },
+  { label: "Metros quadrados", value: "square-meter" },
+  { label: "Centímetros quadrados", value: "square-centimeter" },
+  { label: "Milímetros quadrados", value: "square-millimeter" },
+  { label: "Hectares", value: "hectare" },
 ];

@@ -1,4 +1,4 @@
-import { ConvertMeasureParams, LengthType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
+import { AreaType, ConvertMeasureParams, LengthType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -261,5 +261,66 @@ export function convertVolume({ value, from, to }: ConvertMeasureParams<VolumeTy
       if (to === 'cubic-centimeter') return `${value * 1000000} cm³`;
       if (to === 'liter') return `${value * 1000} L`;
       if (to === 'cubic-meter') return `${value} m³`;
+  }
+}
+
+export function convertArea({ value, from, to }: ConvertMeasureParams<AreaType, 'to'>) {
+  switch (from) {
+    case "square-mile":
+      if (to === 'square-mile') return `${value} mi²`;
+      if (to === 'acre') return `${value * 640} ac`;
+      if (to === 'square-kilometer') return `${value * 2.589988} km²`;
+      if (to === 'square-meter') return `${value * 2589988} m²`;
+      if (to === 'square-centimeter') return `${value * 25899881100} cm²`;
+      if (to === 'square-millimeter') return `${value * 2589988110000} mm²`;
+      if (to === 'hectare') return `${value * 258.998811} ha`;
+    case "acre":
+      if (to === 'square-mile') return `${value * 0.001563} mi²`;
+      if (to === 'acre') return `${value} ac`;
+      if (to === 'square-kilometer') return `${value * 0.004047} km²`;
+      if (to === 'square-meter') return `${value * 4047} m²`;
+      if (to === 'square-centimeter') return `${value * 40468564} cm²`;
+      if (to === 'square-millimeter') return `${value * 4046856422} mm²`;
+      if (to === 'hectare') return `${value * 0.404686} ha`;
+    case "square-kilometer":
+      if (to === 'square-mile') return `${value * 0.386102} mi²`;
+      if (to === 'acre') return `${value * 247.105381} ac`;
+      if (to === 'square-kilometer') return `${value} km²`;
+      if (to === 'square-meter') return `${value * 1000000} m²`;
+      if (to === 'square-centimeter') return `${value * 10000000000} cm²`;
+      if (to === 'square-millimeter') return `${value * 1000000000000} mm²`;
+      if (to === 'hectare') return `${value * 100} ha`;
+    case "square-meter":
+      if (to === 'square-mile') return `${value * 0.0000003861} mi²`;
+      if (to === 'acre') return `${value * 0.000247} ac`;
+      if (to === 'square-kilometer') return `${value * 0.000001} km²`;
+      if (to === 'square-meter') return `${value} m²`;
+      if (to === 'square-centimeter') return `${value * 10000} cm²`;
+      if (to === 'square-millimeter') return `${value * 1000000} mm²`;
+      if (to === 'hectare') return `${value * 0.0001} ha`;
+    case "square-centimeter":
+      if (to === 'square-mile') return `${value * 0.00000000003861} mi²`;
+      if (to === 'acre') return `${value * 0.000000024711} ac`;
+      if (to === 'square-kilometer') return `${value * 0.0000000001} km²`;
+      if (to === 'square-meter') return `${value * 0.0001} m²`;
+      if (to === 'square-centimeter') return `${value} cm²`;
+      if (to === 'square-millimeter') return `${value * 100} mm²`;
+      if (to === 'hectare') return `${value * 0.00000001} ha`;
+    case "square-millimeter":
+      if (to === 'square-mile') return `${value * 0.0000000000003861} mi²`;
+      if (to === 'acre') return `${value * 0.00000000024711} ac`;
+      if (to === 'square-kilometer') return `${value * 0.000000000001} km²`;
+      if (to === 'square-meter') return `${value * 0.000001} m²`;
+      if (to === 'square-centimeter') return `${value * 0.01} cm²`;
+      if (to === 'square-millimeter') return `${value} mm²`;
+      if (to === 'hectare') return `${value * 0.0000000001} ha`;
+    case "hectare":
+      if (to === 'square-mile') return `${value * 0.003861} mi²`;
+      if (to === 'acre') return `${value * 2.471054} ac`;
+      if (to === 'square-kilometer') return `${value * 0.01} km²`;
+      if (to === 'square-meter') return `${value * 10000} m²`;
+      if (to === 'square-centimeter') return `${value * 100000000} cm²`;
+      if (to === 'square-millimeter') return `${value * 10000000000} mm²`;
+      if (to === 'hectare') return `${value} ha`;
   }
 }
