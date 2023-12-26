@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type CalculatorType = "default" | "science" | "temperature" | "speed" | "length" | "weight" | "volume" | "area" | "power" | "pressure" | "energy" | "frequency";
+export type CalculatorType = "default" | "science" | "temperature" | "speed" | "length" | "weight" | "volume" | "area" | "power" | "pressure" | "energy" | "frequency" | "time";
 
 export type MenuItems = {
   label: string;
@@ -39,3 +39,5 @@ export type PressureType = "pascal" | "atmosphere" | "bar" | "kg-per-meter";
 export type EnergyType = "joule" | "kilojoule" | "megajoule" | "calorie" | "kilocalorie" | "kilowatt-hour" | "electronvolt";
 
 export type FrequencyType = "hertz" | "kilohertz" | "megahertz" | "gigahertz" | "rpm";
+
+export type TimeType = "millisecond" | "second" | "minute" | "hour" | "day" | "week" | "month" | "year";

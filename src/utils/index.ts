@@ -1,4 +1,4 @@
-import { AreaType, ConvertMeasureParams, EnergyType, FrequencyType, LengthType, PowerType, PressureType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
+import { AreaType, ConvertMeasureParams, EnergyType, FrequencyType, LengthType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -468,5 +468,82 @@ export function convertFrequency({ value, from, to }: ConvertMeasureParams<Frequ
       if (to === 'megahertz') return `${value * 0.000000016667} MHz`;
       if (to === 'gigahertz') return `${value * 0.000000000016667} GHz`;
       if (to === 'rpm') return `${value} RPM`;
+  }
+}
+
+export function convertTime({ value, from, to }: ConvertMeasureParams<TimeType, 'to'>) {
+  switch (from) {
+    case "millisecond":
+      if (to === 'millisecond') return `${value} ms`;
+      if (to === 'second') return `${value * 0.01} s`;
+      if (to === 'minute') return `${value * 0.000016667} min`;
+      if (to === 'hour') return `${value * 0.00000027778} h`;
+      if (to === 'day') return `${value * 0.000000011574} dias`;
+      if (to === 'week') return `${value * 0.0000000016534} semanas`;
+      if (to === 'month') return `${value * 0.00000000038026} meses`;
+      if (to === 'year') return `${value * 0.000000000031689} anos`;
+    case "second":
+      if (to === 'millisecond') return `${value * 1000} ms`;
+      if (to === 'second') return `${value} s`;
+      if (to === 'minute') return `${value * 0.016667} min`;
+      if (to === 'hour') return `${value * 0.000278} h`;
+      if (to === 'day') return `${value * 0.000011574} dias`;
+      if (to === 'week') return `${value * 0.0000016534} semanas`;
+      if (to === 'month') return `${value * 0.00000038026} meses`;
+      if (to === 'year') return `${value * 0.000000031689} anos`;
+    case "minute":
+      if (to === 'millisecond') return `${value * 60000} ms`;
+      if (to === 'second') return `${value * 60} s`;
+      if (to === 'minute') return `${value} min`;
+      if (to === 'hour') return `${value * 0.016667} h`;
+      if (to === 'day') return `${value * 0.000694} dias`;
+      if (to === 'week') return `${value * 0.000099206} semanas`;
+      if (to === 'month') return `${value * 0.000022816} meses`;
+      if (to === 'year') return `${value * 0.0000019013} anos`;
+    case "hour":
+      if (to === 'millisecond') return `${value * 3600000} ms`;
+      if (to === 'second') return `${value * 3600} s`;
+      if (to === 'minute') return `${value * 60} min`;
+      if (to === 'hour') return `${value} h`;
+      if (to === 'day') return `${value * 0.041667} dias`;
+      if (to === 'week') return `${value * 0.005952} semanas`;
+      if (to === 'month') return `${value * 0.001369} meses`;
+      if (to === 'year') return `${value * 0.000114} anos`;
+    case "day":
+      if (to === 'millisecond') return `${value * 86400000} ms`;
+      if (to === 'second') return `${value * 86400} s`;
+      if (to === 'minute') return `${value * 1440} min`;
+      if (to === 'hour') return `${value * 24} h`;
+      if (to === 'day') return `${value} dias`;
+      if (to === 'week') return `${value * 0.142857} semanas`;
+      if (to === 'month') return `${value * 0.032855} meses`;
+      if (to === 'year') return `${value * 0.002738} anos`;
+    case "week":
+      if (to === 'millisecond') return `${value * 604800000} ms`;
+      if (to === 'second') return `${value * 604800} s`;
+      if (to === 'minute') return `${value * 10080} min`;
+      if (to === 'hour') return `${value * 168} h`;
+      if (to === 'day') return `${value * 7} dias`;
+      if (to === 'week') return `${value} semanas`;
+      if (to === 'month') return `${value * 0.229984} meses`;
+      if (to === 'year') return `${value * 0.019165} anos`;
+    case "month":
+      if (to === 'millisecond') return `${value * 2629746000} ms`;
+      if (to === 'second') return `${value * 2629746} s`;
+      if (to === 'minute') return `${value * 43829} min`;
+      if (to === 'hour') return `${value * 730.485} h`;
+      if (to === 'day') return `${value * 30.436875} dias`;
+      if (to === 'week') return `${value * 4.348125} semanas`;
+      if (to === 'month') return `${value} meses`;
+      if (to === 'year') return `${value * 0.083333} anos`;
+    case "year":
+      if (to === 'millisecond') return `${value * 31556952000} ms`;
+      if (to === 'second') return `${value * 31556952} s`;
+      if (to === 'minute') return `${value * 525949} min`;
+      if (to === 'hour') return `${value * 8766} h`;
+      if (to === 'day') return `${value * 365.2425} dias`;
+      if (to === 'week') return `${value * 52.1775} semanas`;
+      if (to === 'month') return `${value * 12} meses`;
+      if (to === 'year') return `${value} anos`;
   }
 }

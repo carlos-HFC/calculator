@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors, MdSchedule } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -62,6 +62,11 @@ export const MENU_ITEMS: Array<MenuItems> = [
     label: "Frequência",
     value: "frequency",
     icon: <MdSensors size={16} />
+  },
+  {
+    label: "Tempo",
+    value: "time",
+    icon: <MdSchedule size={16} />
   },
 ];
 
@@ -149,4 +154,15 @@ export const FREQUENCY_OPTIONS = [
   { label: "Megahertz", value: "megahertz" },
   { label: "Gigahertz", value: "gigahertz" },
   { label: "Rotações por minuto", value: "rpm" },
+];
+
+export const TIME_OPTIONS = [
+  { label: "Milisegundos", value: "millisecond" },
+  { label: "Segundos", value: "second" },
+  { label: "Minutos", value: "minute" },
+  { label: "Horas", value: "hour" },
+  { label: "Dias", value: "day" },
+  { label: "Semanas", value: "week" },
+  { label: "Meses", value: "month" },
+  { label: "Anos", value: "year" },
 ];
