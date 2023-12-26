@@ -1,4 +1,4 @@
-import { AreaType, ConvertMeasureParams, LengthType, PowerType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
+import { AreaType, ConvertMeasureParams, LengthType, PowerType, PressureType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -347,5 +347,30 @@ export function convertPower({ value, from, to }: ConvertMeasureParams<PowerType
       if (to === 'kilowatt') return `${value * 0.001162} kW`;
       if (to === 'horsepower') return `${value * 0.001559} hp`;
       if (to === 'kilocalorie') return `${value} kcal/h`;
+  }
+}
+
+export function convertPressure({ value, from, to }: ConvertMeasureParams<PressureType, 'to'>) {
+  switch (from) {
+    case "pascal":
+      if (to === 'pascal') return `${value} Pa`;
+      if (to === 'atmosphere') return `${value * 0.0000098692} atm`;
+      if (to === 'bar') return `${value * 0.00001} bar`;
+      if (to === 'kg-per-meter') return `${value * 0.101972} kgf/m²`;
+    case "atmosphere":
+      if (to === 'pascal') return `${value * 101325} Pa`;
+      if (to === 'atmosphere') return `${value} atm`;
+      if (to === 'bar') return `${value * 1.01325} bar`;
+      if (to === 'kg-per-meter') return `${value * 10332} kgf/m²`;
+    case "bar":
+      if (to === 'pascal') return `${value * 100000} Pa`;
+      if (to === 'atmosphere') return `${value * 0.986923} atm`;
+      if (to === 'bar') return `${value} bar`;
+      if (to === 'kg-per-meter') return `${value * 10197} kgf/m²`;
+    case "kg-per-meter":
+      if (to === 'pascal') return `${value * 98067} Pa`;
+      if (to === 'atmosphere') return `${value * 0.967841} atm`;
+      if (to === 'bar') return `${value * 0.980665} bar`;
+      if (to === 'kg-per-meter') return `${value} kgf/m²`;
   }
 }

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type CalculatorType = "default" | "science" | "temperature" | "speed" | "length" | "weight" | "volume" | "area" | "power";
+export type CalculatorType = "default" | "science" | "temperature" | "speed" | "length" | "weight" | "volume" | "area" | "power" | "pressure";
 
 export type MenuItems = {
   label: string;
@@ -33,3 +33,5 @@ export type VolumeType = "milliliter" | "cubic-centimeter" | "liter" | "cubic-me
 export type AreaType = "square-mile" | "acre" | "square-kilometer" | "square-meter" | "square-centimeter" | "square-millimeter" | "hectare";
 
 export type PowerType = "watt" | "kilowatt" | "horsepower" | "kilocalorie";
+
+export type PressureType = "pascal" | "atmosphere" | "bar" | "kg-per-meter";

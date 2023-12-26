@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdBolt } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdBolt, MdNetworkCheck, MdDirectionsRun } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -21,7 +21,7 @@ export const MENU_ITEMS: Array<MenuItems> = [
   {
     label: "Velocidade",
     value: "speed",
-    icon: <MdSpeed size={16} />
+    icon: <MdDirectionsRun size={16} />
   },
   {
     label: "Comprimento",
@@ -47,6 +47,11 @@ export const MENU_ITEMS: Array<MenuItems> = [
     label: "Potência",
     value: "power",
     icon: <MdBolt size={16} />
+  },
+  {
+    label: "Pressão",
+    value: "pressure",
+    icon: <MdSpeed size={16} />
   },
 ];
 
@@ -109,4 +114,11 @@ export const POWER_OPTIONS = [
   { label: "Quilowatts", value: "kilowatt" },
   { label: "Cavalos de potência", value: "horsepower" },
   { label: "Quilocaloria", value: "kilocalorie" },
+];
+
+export const PRESSURE_OPTIONS = [
+  { label: "Pascals", value: "pascal" },
+  { label: "Atmosferas", value: "atmosphere" },
+  { label: "Bars", value: "bar" },
+  { label: "Kg por metro quadrado", value: "kg-per-meter" },
 ];
