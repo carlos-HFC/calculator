@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdBolt } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -42,6 +42,11 @@ export const MENU_ITEMS: Array<MenuItems> = [
     label: "Área",
     value: "area",
     icon: <MdSquareFoot size={16} />
+  },
+  {
+    label: "Potência",
+    value: "power",
+    icon: <MdBolt size={16} />
   },
 ];
 
@@ -97,4 +102,11 @@ export const AREA_OPTIONS = [
   { label: "Centímetros quadrados", value: "square-centimeter" },
   { label: "Milímetros quadrados", value: "square-millimeter" },
   { label: "Hectares", value: "hectare" },
+];
+
+export const POWER_OPTIONS = [
+  { label: "Watts", value: "watt" },
+  { label: "Quilowatts", value: "kilowatt" },
+  { label: "Cavalos de potência", value: "horsepower" },
+  { label: "Quilocaloria", value: "kilocalorie" },
 ];

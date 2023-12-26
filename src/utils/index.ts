@@ -1,4 +1,4 @@
-import { AreaType, ConvertMeasureParams, LengthType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
+import { AreaType, ConvertMeasureParams, LengthType, PowerType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -322,5 +322,30 @@ export function convertArea({ value, from, to }: ConvertMeasureParams<AreaType, 
       if (to === 'square-centimeter') return `${value * 100000000} cm²`;
       if (to === 'square-millimeter') return `${value * 10000000000} mm²`;
       if (to === 'hectare') return `${value} ha`;
+  }
+}
+
+export function convertPower({ value, from, to }: ConvertMeasureParams<PowerType, 'to'>) {
+  switch (from) {
+    case "watt":
+      if (to === 'watt') return `${value} W`;
+      if (to === 'kilowatt') return `${value * 0.001} kW`;
+      if (to === 'horsepower') return `${value * 0.001341} hp`;
+      if (to === 'kilocalorie') return `${value * 0.860421} kcal/h`;
+    case "kilowatt":
+      if (to === 'watt') return `${value * 1000} W`;
+      if (to === 'kilowatt') return `${value} kW`;
+      if (to === 'horsepower') return `${value * 1.341022} hp`;
+      if (to === 'kilocalorie') return `${value * 860.420815} kcal/h`;
+    case "horsepower":
+      if (to === 'watt') return `${value * 745.699872} W`;
+      if (to === 'kilowatt') return `${value * 0.7457} kW`;
+      if (to === 'horsepower') return `${value} hp`;
+      if (to === 'kilocalorie') return `${value * 641.615691} kcal/h`;
+    case "kilocalorie":
+      if (to === 'watt') return `${value * 1.162222} W`;
+      if (to === 'kilowatt') return `${value * 0.001162} kW`;
+      if (to === 'horsepower') return `${value * 0.001559} hp`;
+      if (to === 'kilocalorie') return `${value} kcal/h`;
   }
 }
