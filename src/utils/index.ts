@@ -1,4 +1,4 @@
-import { AreaType, ConvertMeasureParams, EnergyType, LengthType, PowerType, PressureType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
+import { AreaType, ConvertMeasureParams, EnergyType, FrequencyType, LengthType, PowerType, PressureType, SpeedType, TemperatureType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -433,5 +433,40 @@ export function convertEnergy({ value, from, to }: ConvertMeasureParams<EnergyTy
       if (to === 'kilocalorie') return `${value * 0.000000000000000000000038293} kcal`;
       if (to === 'kilowatt-hour') return `${value * 0.000000000000000000000000044505} kWh`;
       if (to === 'electronvolt') return `${value} eV`;
+  }
+}
+
+export function convertFrequency({ value, from, to }: ConvertMeasureParams<FrequencyType, 'to'>) {
+  switch (from) {
+    case "hertz":
+      if (to === 'hertz') return `${value} Hz`;
+      if (to === 'kilohertz') return `${value * 0.001} kHz`;
+      if (to === 'megahertz') return `${value * 0.000001} MHz`;
+      if (to === 'gigahertz') return `${value * 0.000000001} GHz`;
+      if (to === 'rpm') return `${value * 60} RPM`;
+    case "kilohertz":
+      if (to === 'hertz') return `${value * 1000} Hz`;
+      if (to === 'kilohertz') return `${value} kHz`;
+      if (to === 'megahertz') return `${value * 0.001} MHz`;
+      if (to === 'gigahertz') return `${value * 0.000001} GHz`;
+      if (to === 'rpm') return `${value * 60000} RPM`;
+    case "megahertz":
+      if (to === 'hertz') return `${value * 1000000} Hz`;
+      if (to === 'kilohertz') return `${value * 1000} kHz`;
+      if (to === 'megahertz') return `${value} MHz`;
+      if (to === 'gigahertz') return `${value * 0.001} GHz`;
+      if (to === 'rpm') return `${value * 60000000} RPM`;
+    case "gigahertz":
+      if (to === 'hertz') return `${value * 1000000000} Hz`;
+      if (to === 'kilohertz') return `${value * 1000000} kHz`;
+      if (to === 'megahertz') return `${value * 1000} MHz`;
+      if (to === 'gigahertz') return `${value} GHz`;
+      if (to === 'rpm') return `${value * 60000000000} RPM`;
+    case "rpm":
+      if (to === 'hertz') return `${value * 0.016667} Hz`;
+      if (to === 'kilohertz') return `${value * 0.000016667} kHz`;
+      if (to === 'megahertz') return `${value * 0.000000016667} MHz`;
+      if (to === 'gigahertz') return `${value * 0.000000000016667} GHz`;
+      if (to === 'rpm') return `${value} RPM`;
   }
 }

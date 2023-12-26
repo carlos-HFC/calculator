@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -57,6 +57,11 @@ export const MENU_ITEMS: Array<MenuItems> = [
     label: "Energia",
     value: "energy",
     icon: <MdElectricBolt size={16} />
+  },
+  {
+    label: "Frequência",
+    value: "frequency",
+    icon: <MdSensors size={16} />
   },
 ];
 
@@ -136,4 +141,12 @@ export const ENERGY_OPTIONS = [
   { label: "Calorias alimentares", value: "kilocalorie" },
   { label: "Quilowatt hora", value: "kilowatt-hour" },
   { label: "Elétrons-volts", value: "electronvolt" },
+];
+
+export const FREQUENCY_OPTIONS = [
+  { label: "Hertz", value: "hertz" },
+  { label: "Quilohertz", value: "kilohertz" },
+  { label: "Megahertz", value: "megahertz" },
+  { label: "Gigahertz", value: "gigahertz" },
+  { label: "Rotações por minuto", value: "rpm" },
 ];
