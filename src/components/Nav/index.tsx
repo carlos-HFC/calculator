@@ -76,7 +76,7 @@ export const Nav = memo(() => {
       <ul
         id="menu"
         aria-labelledby="menulist"
-        className={classNames("bg-zinc-900 absolute duration-500 top-full right-0 h-[calc(100vh-100%)] flex flex-col text-left w-full md:w-1/3 z-10", isOpen ? "translate-x-0" : "translate-x-full")}
+        className={classNames("bg-zinc-900 absolute duration-500 top-full right-0 h-[calc(100vh-100%)] flex flex-col text-left w-full md:w-1/3 z-10 overflow-auto", isOpen ? "translate-x-0" : "translate-x-full")}
         onClick={e => e.stopPropagation()}
       >
         {MENU_ITEMS.map((menu, i) => (
