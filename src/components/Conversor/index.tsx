@@ -244,13 +244,17 @@ export function Conversor<T>(props: ConversorProps<T>) {
       <Button label="2" bt-type="number" onClick={() => addCharacter(2)} />
       <Button label="3" bt-type="number" onClick={() => addCharacter(3)} />
 
-      <Button disabled={conversion.from !== 'hexadecimal'} label="A" bt-type="number" onClick={() => addCharacter("a")} />
-      <Button disabled={conversion.from !== 'hexadecimal'} label="B" bt-type="number" onClick={() => addCharacter("b")} />
-      <Button disabled={conversion.from !== 'hexadecimal'} label="C" bt-type="number" onClick={() => addCharacter("c")} />
+      {IS_NUMBER_CONVERSION && (
+        <>
+          <Button disabled={conversion.from !== 'hexadecimal'} label="A" bt-type="number" onClick={() => addCharacter("a")} />
+          <Button disabled={conversion.from !== 'hexadecimal'} label="B" bt-type="number" onClick={() => addCharacter("b")} />
+          <Button disabled={conversion.from !== 'hexadecimal'} label="C" bt-type="number" onClick={() => addCharacter("c")} />
 
-      <Button disabled={conversion.from !== 'hexadecimal'} label="D" bt-type="number" onClick={() => addCharacter("d")} />
-      <Button disabled={conversion.from !== 'hexadecimal'} label="E" bt-type="number" onClick={() => addCharacter("e")} />
-      <Button disabled={conversion.from !== 'hexadecimal'} label="F" bt-type="number" onClick={() => addCharacter("f")} />
+          <Button disabled={conversion.from !== 'hexadecimal'} label="D" bt-type="number" onClick={() => addCharacter("d")} />
+          <Button disabled={conversion.from !== 'hexadecimal'} label="E" bt-type="number" onClick={() => addCharacter("e")} />
+          <Button disabled={conversion.from !== 'hexadecimal'} label="F" bt-type="number" onClick={() => addCharacter("f")} />
+        </>
+      )}
 
       <Button className={classNames(IS_NUMBER_CONVERSION ? 'col-span-full' : 'col-start-2')} label="0" bt-type="number" onClick={() => addCharacter(0)} />
 
