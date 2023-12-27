@@ -8,9 +8,10 @@ import { Select } from "../Select";
 
 import { ChooseConversion, ConvertMeasureParams } from "@/@types";
 import { useCalculator } from "@/contexts/Calculator";
+import { classNames } from "@/utils";
 
 interface ConversorProps<T> {
-  chooseConversion(params: ConvertMeasureParams<T, 'to'>): string | undefined;
+  chooseConversion(params: ConvertMeasureParams<T, 'to'>): string | number | undefined;
   list: {
     label: string;
     value: string;
@@ -26,19 +27,31 @@ export function Conversor<T>(props: ConversorProps<T>) {
 
   const [conversion, setConversion] = useState<ChooseConversion<T>>(props.initialValue);
 
+  const IS_NUMBER_CONVERSION = type === 'number';
+
   const valueConverted = useMemo(() => {
     const value = props.chooseConversion({
-      value: Number(display),
+      value: display as any,
       ...conversion
     });
+
+    if (IS_NUMBER_CONVERSION) {
+      return (
+        <p className="text-base text-neutral-400">
+          <span className="text-white font-medium">
+            {value}
+          </span>
+        </p>
+      );
+    }
 
     const formatNum = Intl.NumberFormat('pt-BR', {
       minimumFractionDigits: 0,
       maximumFractionDigits: type !== 'time' ? 6 : 2
     });
 
-    const num = value?.split(' ')[0];
-    const measure = value?.split(' ')[1];
+    const num = String(value)?.split(' ')[0];
+    const measure = String(value)?.split(' ')[1];
 
     return (
       <p className="text-base text-neutral-400">
@@ -54,6 +67,24 @@ export function Conversor<T>(props: ConversorProps<T>) {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       switch (event.key) {
+        case 'a':
+        case 'A':
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('a');
+        case 'b':
+        case 'B':
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('b');
+        case 'c':
+        case 'C':
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('c');
+        case 'd':
+        case 'D':
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('d');
+        case 'e':
+        case 'E':
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('e');
+        case 'f':
+        case 'F':
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('f');
         case 'Backspace':
           return erase();
         case 'Escape':
@@ -61,27 +92,27 @@ export function Conversor<T>(props: ConversorProps<T>) {
           return clearDisplay();
         case ',':
         case '.':
-          return addCharacter('.');
+          if (!IS_NUMBER_CONVERSION) return addCharacter('.');
         case '0':
           return addCharacter('0');
         case '1':
           return addCharacter('1');
         case '2':
-          return addCharacter('2');
+          if (conversion.from !== 'binary') return addCharacter('2');
         case '3':
-          return addCharacter('3');
+          if (conversion.from !== 'binary') return addCharacter('3');
         case '4':
-          return addCharacter('4');
+          if (conversion.from !== 'binary') return addCharacter('4');
         case '5':
-          return addCharacter('5');
+          if (conversion.from !== 'binary') return addCharacter('5');
         case '6':
-          return addCharacter('6');
+          if (conversion.from !== 'binary') return addCharacter('6');
         case '7':
-          return addCharacter('7');
+          if (conversion.from !== 'binary') return addCharacter('7');
         case '8':
-          return addCharacter('8');
+          if (conversion.from !== 'binary') return addCharacter('8');
         case '9':
-          return addCharacter('9');
+          if (conversion.from !== 'binary') return addCharacter('9');
       }
     };
 
@@ -133,12 +164,12 @@ export function Conversor<T>(props: ConversorProps<T>) {
 
   const invertConversion = useCallback(
     () => {
-      setConversion(prev => {
-        return {
-          to: prev.from,
-          from: prev.to,
-        };
-      });
+      setConversion(prev => ({
+        to: prev.from,
+        from: prev.to,
+      }));
+
+      if (IS_NUMBER_CONVERSION) clearDisplay();
     },
     []
   );
@@ -213,8 +244,19 @@ export function Conversor<T>(props: ConversorProps<T>) {
       <Button label="2" bt-type="number" onClick={() => addCharacter(2)} />
       <Button label="3" bt-type="number" onClick={() => addCharacter(3)} />
 
-      <Button className="col-start-2" label="0" bt-type="number" onClick={() => addCharacter(0)} />
-      <Button label="," bt-type="number" onClick={() => addCharacter('.')} />
+      <Button label="A" bt-type="number" onClick={() => addCharacter("a")} />
+      <Button label="B" bt-type="number" onClick={() => addCharacter("b")} />
+      <Button label="C" bt-type="number" onClick={() => addCharacter("c")} />
+
+      <Button label="D" bt-type="number" onClick={() => addCharacter("d")} />
+      <Button label="E" bt-type="number" onClick={() => addCharacter("e")} />
+      <Button label="F" bt-type="number" onClick={() => addCharacter("f")} />
+
+      <Button className={classNames(IS_NUMBER_CONVERSION ? 'col-span-full' : 'col-start-2')} label="0" bt-type="number" onClick={() => addCharacter(0)} />
+
+      {(!IS_NUMBER_CONVERSION) && (
+        <Button label="," bt-type="number" onClick={() => addCharacter('.')} />
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors, MdSchedule } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors, MdSchedule, Md123 } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -67,6 +67,11 @@ export const MENU_ITEMS: Array<MenuItems> = [
     label: "Tempo",
     value: "time",
     icon: <MdSchedule size={16} />
+  },
+  {
+    label: "Número",
+    value: "number",
+    icon: <Md123 size={16} />
   },
 ];
 
@@ -165,4 +170,11 @@ export const TIME_OPTIONS = [
   { label: "Semanas", value: "week" },
   { label: "Meses", value: "month" },
   { label: "Anos", value: "year" },
+];
+
+export const NUMBER_OPTIONS = [
+  { label: "Binário", value: "binary" },
+  { label: "Decimal", value: "decimal" },
+  { label: "Hexadecimal", value: "hexadecimal" },
+  { label: "Octal", value: "octal" },
 ];

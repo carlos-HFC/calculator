@@ -1,4 +1,4 @@
-import { AreaType, ConvertMeasureParams, EnergyType, FrequencyType, LengthType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
+import { AreaType, ConvertMeasureParams, EnergyType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -14,6 +14,189 @@ export function termialize(value: number): number {
 export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
+
+function decimalToOctal(num: number) {
+  let rest = [];
+
+  while (num >= 0) {
+    rest.push(num % 8);
+
+    let total = parseInt(String(num / 8));
+    num = total === 0 ? -1 : total;
+  }
+
+  return Number(rest.reverse().join(''));
+};
+
+function decimalToHex(num: number) {
+  let rest = [];
+
+  while (num >= 0) {
+    let tmp = num % 16;
+
+    if (tmp === 10) rest.push('a');
+    else if (tmp === 11) rest.push('b');
+    else if (tmp === 12) rest.push('c');
+    else if (tmp === 13) rest.push('d');
+    else if (tmp === 14) rest.push('e');
+    else if (tmp === 15) rest.push('f');
+    else rest.push(tmp);
+
+    let total = parseInt(String(num / 16));
+    num = total === 0 ? -1 : total;
+  }
+
+  return rest.reverse().join('');
+};
+
+function decimalToBinary(num: number) {
+  let rest = [];
+
+  while (num >= 0) {
+    rest.push(num % 2);
+
+    let total = parseInt(String(num / 2));
+    num = total === 0 ? -1 : total;
+  };
+
+  return Number(rest.reverse().join(''));
+};
+
+function octalToDecimal(num: number) {
+  let parsed = num.toString().split('').reverse();
+  let sum = 0;
+
+  for (let index = 0; index < parsed.length; index++) {
+    sum = sum + (Number(parsed[index]) * Math.pow(8, index));
+  }
+
+  let octal = decimalToOctal(sum);
+
+  if (octal !== Number(num)) return Infinity;
+
+  return sum;
+};
+
+function octalToBinary(num: number) {
+  if (octalToDecimal(num) === Infinity) return octalToDecimal(num);
+
+  let parsed = num.toString().split('');
+  let rest = [];
+
+  for (let index = 0; index < parsed.length; index++) {
+    let n = Number(parsed[index]);
+    let convert = decimalToBinary(n);
+    rest.push(convert);
+  }
+
+  return parseInt(rest.map(a => String(a).padStart(3, '0')).join(''));
+};
+
+function octalToHex(num: number) {
+  if (octalToDecimal(num) === Infinity) return octalToDecimal(num);
+
+  let converted = octalToDecimal(num);
+
+  return decimalToHex(Number(converted));
+};
+
+function hexToDecimal(hex: string) {
+  let parsed = hex.split('');
+  let sum = 0;
+
+  const isFractional = hex.includes('.');
+
+  if (isFractional) {
+    parsed.slice(2);
+  } else {
+    parsed.reverse();
+  }
+
+  for (let index = 0; index < parsed.length; index++) {
+    let convertNumber = parsed[index];
+
+    if (convertNumber.toLowerCase() === 'a') convertNumber = '10';
+    if (convertNumber.toLowerCase() === 'b') convertNumber = '11';
+    if (convertNumber.toLowerCase() === 'c') convertNumber = '12';
+    if (convertNumber.toLowerCase() === 'd') convertNumber = '13';
+    if (convertNumber.toLowerCase() === 'e') convertNumber = '14';
+    if (convertNumber.toLowerCase() === 'f') convertNumber = '15';
+
+    sum = sum + Number(convertNumber) * Math.pow(16, isFractional ? -(index + 1) : index);
+  }
+
+  return sum;
+};
+
+function hexToBinary(hex: string) {
+  if (hex.includes('.')) return Infinity;
+
+  let parsed = hex.split('');
+  let rest = [];
+
+  for (let index = 0; index < parsed.length; index++) {
+    let convertNumber = parsed[index];
+
+    if (convertNumber.toLowerCase() === 'a') convertNumber = '10';
+    if (convertNumber.toLowerCase() === 'b') convertNumber = '11';
+    if (convertNumber.toLowerCase() === 'c') convertNumber = '12';
+    if (convertNumber.toLowerCase() === 'd') convertNumber = '13';
+    if (convertNumber.toLowerCase() === 'e') convertNumber = '14';
+    if (convertNumber.toLowerCase() === 'f') convertNumber = '15';
+
+    let convert = decimalToBinary(Number(convertNumber));
+    rest.push(convert);
+  }
+
+  return parseInt(rest.map(a => String(a).padStart(4, '0')).join(''));
+};
+
+function hexToOctal(hex: string) {
+  if (hex.includes('.')) return Infinity;
+
+  let convert = hexToDecimal(hex);
+
+  return decimalToOctal(convert);
+};
+
+function binaryToDecimal(num: number) {
+  let parsed = num.toString().split('').reverse();
+  let sum = 0;
+
+  for (let index = 0; index < parsed.length; index++) {
+    sum = sum + (Number(parsed[index]) * Math.pow(2, index));
+  }
+
+  return sum;
+};
+
+function binaryToHex(num: number) {
+  let parsed = num.toString().split('').reverse().join('').match(/.{1,4}/g)?.reverse().map(a => a.split('').reverse().join('')) as string[];
+
+  let total = [];
+
+  for (let index = 0; index < parsed.length; index++) {
+    let convert = binaryToDecimal(Number(parsed[index]));
+
+    total.push(decimalToHex(convert));
+  }
+
+  return total.join('');
+};
+
+function binaryToOctal(num: number) {
+  let parsed = num.toString().split('').reverse().join('').match(/.{1,3}/g)?.reverse().map(a => a.split('').reverse().join('')) as string[];
+
+  let total = [];
+
+  for (let index = 0; index < parsed.length; index++) {
+    let convert = binaryToDecimal(Number(parsed[index]));
+
+    total.push(decimalToOctal(convert));
+  }
+
+  return total.join('');
+};
 
 export function convertTemperature({ value, from, to }: ConvertMeasureParams<TemperatureType, 'to'>) {
   switch (from) {
@@ -545,5 +728,30 @@ export function convertTime({ value, from, to }: ConvertMeasureParams<TimeType, 
       if (to === 'week') return `${value * 52.1775} semanas`;
       if (to === 'month') return `${value * 12} meses`;
       if (to === 'year') return `${value} anos`;
+  }
+}
+
+export function convertNumber({ value, from, to }: ConvertMeasureParams<NumberType, 'to'>) {
+  switch (from) {
+    case "binary":
+      if (to === 'binary') return value;
+      if (to === 'decimal') return binaryToDecimal(value);
+      if (to === 'hexadecimal') return binaryToHex(value);
+      if (to === 'octal') return binaryToOctal(value);
+    case "decimal":
+      if (to === 'binary') return decimalToBinary(value);
+      if (to === 'decimal') return value;
+      if (to === 'hexadecimal') return decimalToHex(value);
+      if (to === 'octal') return decimalToOctal(value);
+    case "octal":
+      if (to === 'binary') return octalToBinary(value);
+      if (to === 'decimal') return octalToDecimal(value);
+      if (to === 'hexadecimal') return octalToHex(value);
+      if (to === 'octal') return value;
+    case "hexadecimal":
+      if (to === 'binary') return hexToBinary(String(value));
+      if (to === 'decimal') return hexToDecimal(String(value));
+      if (to === 'hexadecimal') return value;
+      if (to === 'octal') return hexToOctal(String(value));
   }
 }
