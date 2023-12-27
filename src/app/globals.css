@@ -2,14 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-scrollbar {
-  display: none;
-}
-
 .temp-select {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" data-slot="icon"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>');
 }
 
 .temp-select option {
   background-color: #202020;
+}
+
+#menu::-webkit-scrollbar {
+  width: 10px;
+}
+
+#menu::-webkit-scrollbar-track {
+  @apply bg-transparent;
+  @apply rounded-lg;
+}
+
+#menu::-webkit-scrollbar-thumb {
+  @apply bg-zinc-700;
+  @apply rounded-lg;
+  @apply border-2;
+  @apply border-zinc-900;
+  @apply border-solid;
+}
+
+main::-webkit-scrollbar {
+  @apply hidden;
 }
