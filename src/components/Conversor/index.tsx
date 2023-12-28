@@ -29,6 +29,10 @@ export function Conversor<T>(props: ConversorProps<T>) {
 
   const IS_NUMBER_CONVERSION = type === 'number';
 
+  const IS_BINARY_CONVERSION = useMemo(() => conversion.from === 'binary', [conversion.from]);
+  const IS_OCTAL_CONVERSION = useMemo(() => conversion.from === 'octal', [conversion.from]);
+  const IS_HEXADECIMAL_CONVERSION = useMemo(() => conversion.from === 'hexadecimal', [conversion.from]);
+
   const valueConverted = useMemo(() => {
     const value = props.chooseConversion({
       value: display as any,
@@ -69,22 +73,22 @@ export function Conversor<T>(props: ConversorProps<T>) {
       switch (event.key) {
         case 'a':
         case 'A':
-          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('a');
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('A');
         case 'b':
         case 'B':
-          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('b');
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('B');
         case 'c':
         case 'C':
-          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('c');
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('C');
         case 'd':
         case 'D':
-          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('d');
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('D');
         case 'e':
         case 'E':
-          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('e');
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('E');
         case 'f':
         case 'F':
-          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('f');
+          if (IS_NUMBER_CONVERSION && conversion.from === 'hexadecimal') return addCharacter('F');
         case 'Backspace':
           return erase();
         case 'Escape':
@@ -131,6 +135,8 @@ export function Conversor<T>(props: ConversorProps<T>) {
         ...prev,
         [event.target.name]: event.target.value
       }));
+
+      if (IS_NUMBER_CONVERSION) clearDisplay();
     },
     []
   );
@@ -232,27 +238,27 @@ export function Conversor<T>(props: ConversorProps<T>) {
       <Button className="col-start-2" label="C" bt-type="operation" onClick={clearDisplay} />
       <Button label="⌫" bt-type="operation" onClick={erase} />
 
-      <Button label="7" bt-type="number" onClick={() => addCharacter(7)} />
-      <Button label="8" bt-type="number" onClick={() => addCharacter(8)} />
-      <Button label="9" bt-type="number" onClick={() => addCharacter(9)} />
+      <Button disabled={IS_BINARY_CONVERSION} label="7" bt-type="number" onClick={() => addCharacter(7)} />
+      <Button disabled={IS_BINARY_CONVERSION || IS_OCTAL_CONVERSION} label="8" bt-type="number" onClick={() => addCharacter(8)} />
+      <Button disabled={IS_BINARY_CONVERSION || IS_OCTAL_CONVERSION} label="9" bt-type="number" onClick={() => addCharacter(9)} />
 
-      <Button label="4" bt-type="number" onClick={() => addCharacter(4)} />
-      <Button label="5" bt-type="number" onClick={() => addCharacter(5)} />
-      <Button label="6" bt-type="number" onClick={() => addCharacter(6)} />
+      <Button disabled={IS_BINARY_CONVERSION} label="4" bt-type="number" onClick={() => addCharacter(4)} />
+      <Button disabled={IS_BINARY_CONVERSION} label="5" bt-type="number" onClick={() => addCharacter(5)} />
+      <Button disabled={IS_BINARY_CONVERSION} label="6" bt-type="number" onClick={() => addCharacter(6)} />
 
       <Button label="1" bt-type="number" onClick={() => addCharacter(1)} />
-      <Button label="2" bt-type="number" onClick={() => addCharacter(2)} />
-      <Button label="3" bt-type="number" onClick={() => addCharacter(3)} />
+      <Button disabled={IS_BINARY_CONVERSION} label="2" bt-type="number" onClick={() => addCharacter(2)} />
+      <Button disabled={IS_BINARY_CONVERSION} label="3" bt-type="number" onClick={() => addCharacter(3)} />
 
       {IS_NUMBER_CONVERSION && (
         <>
-          <Button disabled={conversion.from !== 'hexadecimal'} label="A" bt-type="number" onClick={() => addCharacter("a")} />
-          <Button disabled={conversion.from !== 'hexadecimal'} label="B" bt-type="number" onClick={() => addCharacter("b")} />
-          <Button disabled={conversion.from !== 'hexadecimal'} label="C" bt-type="number" onClick={() => addCharacter("c")} />
+          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="A" bt-type="number" onClick={() => addCharacter("A")} />
+          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="B" bt-type="number" onClick={() => addCharacter("B")} />
+          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="C" bt-type="number" onClick={() => addCharacter("C")} />
 
-          <Button disabled={conversion.from !== 'hexadecimal'} label="D" bt-type="number" onClick={() => addCharacter("d")} />
-          <Button disabled={conversion.from !== 'hexadecimal'} label="E" bt-type="number" onClick={() => addCharacter("e")} />
-          <Button disabled={conversion.from !== 'hexadecimal'} label="F" bt-type="number" onClick={() => addCharacter("f")} />
+          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="D" bt-type="number" onClick={() => addCharacter("D")} />
+          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="E" bt-type="number" onClick={() => addCharacter("E")} />
+          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="F" bt-type="number" onClick={() => addCharacter("F")} />
         </>
       )}
 
