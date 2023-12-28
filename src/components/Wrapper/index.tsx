@@ -26,7 +26,7 @@ const VARIANTS = (type: CalculatorType) => {
     case "pressure":
       return "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]";
     case "number":
-      return "grid-cols-3 grid-rows-[1fr_repeat(8,_52px)] xs:grid-rows-[1fr_repeat(8,_64px)]"
+      return "grid-cols-3 grid-rows-[1fr_repeat(8,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(8,_minmax(64px,_auto))]"
     case "science":
       return "grid-cols-4 grid-rows-[1fr_repeat(7,_52px)] xs:grid-rows-[1fr_repeat(7,_64px)]";
     case "default":

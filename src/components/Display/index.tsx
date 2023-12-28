@@ -4,15 +4,11 @@ import { classNames } from "@/utils";
 
 const VARIANTS = (type: CalculatorType) => {
   switch (type) {
-    case "temperature":
-    case "speed":
-    case "length":
-    case "weight":
-      return 'text-5xl py-6'
     case "default":
     case "science":
+      return 'justify-end text-6xl py-10';
     default:
-      return 'justify-end text-6xl py-10'
+      return 'text-5xl py-6';
   }
 };
 
