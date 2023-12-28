@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useState, useEffect, useCallback, memo } from "react";
-import { MdMenu } from "react-icons/md";
 
 import { NavItem } from "../NavItem";
 
@@ -62,11 +61,11 @@ export const Nav = memo(() => {
           aria-hidden="true"
           aria-controls="menu"
           id="menulist"
+          className="flex items-center justify-center"
         >
-          <MdMenu
-            size={32}
-            aria-label="Abrir e fechar menu"
-          />
+          <span aria-label="Abrir e fechar menu" className="material-symbols-outlined text-[2rem]">
+            menu
+          </span>
         </button>
       </div>
 

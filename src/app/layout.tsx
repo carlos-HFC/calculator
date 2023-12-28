@@ -5,6 +5,7 @@ import { sharedMetadata } from "./shared-metadata";
 import { CalculatorProvider } from "@/contexts/Calculator";
 import { Header } from "@/components/Header";
 
+import 'material-symbols'
 import './globals.css';
 
 export const metadata: Metadata = sharedMetadata;

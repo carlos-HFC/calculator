@@ -1,87 +1,85 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors, MdSchedule, Md123, MdSdStorage, MdFitnessCenter } from 'react-icons/md';
-
 import { MenuItems } from "@/@types";
 
 export const MENU_ITEMS: Array<MenuItems> = [
   {
     label: "Padrão",
     value: "default",
-    icon: <MdCalculate size={16} />
+    icon: <span className="material-symbols-outlined">calculate</span>
   },
   {
     label: "Científica",
     value: "science",
-    icon: <MdScience size={16} />
+    icon: <span className="material-symbols-outlined">experiment</span>
   },
   {
     label: "Temperatura",
     value: "temperature",
-    icon: <MdDeviceThermostat size={16} />
+    icon: <span className="material-symbols-outlined">thermometer</span>
   },
   {
     label: "Velocidade",
     value: "speed",
-    icon: <MdDirectionsRun size={16} />
+    icon: <span className="material-symbols-outlined">sprint</span>
   },
   {
     label: "Comprimento",
     value: "length",
-    icon: <MdStraighten size={16} />
+    icon: <span className="material-symbols-outlined">straighten</span>
   },
   {
     label: "Peso e massa",
     value: "weight",
-    icon: <MdScale size={16} />
+    icon: <span className="material-symbols-outlined">weight</span>
   },
   {
     label: "Volume",
     value: "volume",
-    icon: <MdWaterDrop size={16} />
+    icon: <span className="material-symbols-outlined">water_drop</span>
   },
   {
     label: "Área",
     value: "area",
-    icon: <MdSquareFoot size={16} />
+    icon: <span className="material-symbols-outlined">square_foot</span>
   },
   {
     label: "Potência",
     value: "power",
-    icon: <MdPower size={16} />
+    icon: <span className="material-symbols-outlined">power</span>
   },
   {
     label: "Pressão",
     value: "pressure",
-    icon: <MdSpeed size={16} />
+    icon: <span className="material-symbols-outlined">speed</span>
   },
   {
     label: "Energia",
     value: "energy",
-    icon: <MdElectricBolt size={16} />
+    icon: <span className="material-symbols-outlined">electric_bolt</span>
   },
   {
     label: "Frequência",
     value: "frequency",
-    icon: <MdSensors size={16} />
+    icon: <span className="material-symbols-outlined">sensors</span>
   },
   {
     label: "Tempo",
     value: "time",
-    icon: <MdSchedule size={16} />
+    icon: <span className="material-symbols-outlined">schedule</span>
   },
   {
     label: "Número",
     value: "number",
-    icon: <Md123 size={16} />
+    icon: <span className="material-symbols-outlined">123</span>
   },
   {
     label: "Armazenamento",
     value: "data",
-    icon: <MdSdStorage size={16} />
+    icon: <span className="material-symbols-outlined">database</span>
   },
   {
     label: "Força",
     value: "force",
-    icon: <MdFitnessCenter size={16} />
+    icon: <span className="material-symbols-outlined">fitness_center</span>
   },
 ];
 

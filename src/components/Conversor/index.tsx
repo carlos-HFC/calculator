@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo, ChangeEvent } from "react";
-import { MdSync } from "react-icons/md";
 
 import { Button } from "../Button";
 import { Select } from "../Select";
@@ -220,7 +219,7 @@ export function Conversor<T>(props: ConversorProps<T>) {
             className="border-0 outline-none w-8 absolute right-0 flex items-center justify-center aspect-square"
             onClick={invertConversion}
           >
-            <MdSync size="100%" />
+            <span className="material-symbols-outlined text-[2rem]">sync</span>
           </button>
         </div>
 
