@@ -15,11 +15,16 @@ export const Nav = memo(() => {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isOpen) setIsOpen(false);
+      if (event.key === 'Escape' && isOpen) closeMenu();
     };
 
     document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
+    document.documentElement.addEventListener('click', closeMenu);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.documentElement.removeEventListener("click", closeMenu);
+    };
   });
 
   useEffect(() => {
@@ -30,10 +35,12 @@ export const Nav = memo(() => {
     return () => document.documentElement.classList.remove('overflow-hidden');
   }, [isOpen]);
 
+  const closeMenu = () => setIsOpen(false);
+
   const changeType = useCallback(
     (type: CalculatorType) => {
       handleType(type);
-      setIsOpen(false);
+      closeMenu;
     },
     []
   );
@@ -58,12 +65,13 @@ export const Nav = memo(() => {
       <div className="flex">
         <button
           onClick={() => setIsOpen(prev => !prev)}
-          aria-hidden="true"
           aria-controls="menu"
           id="menulist"
           className="flex items-center justify-center"
+          aria-label="Abrir e fechar menu"
+          aria-expanded={isOpen ? 'true' : 'false'}
         >
-          <span aria-label="Abrir e fechar menu" className="material-symbols-outlined text-[2rem]">
+          <span className="material-symbols-outlined text-[2rem]">
             menu
           </span>
         </button>
