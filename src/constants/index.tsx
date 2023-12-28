@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors, MdSchedule, Md123,MdSdStorage } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors, MdSchedule, Md123, MdSdStorage, MdFitnessCenter } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -77,6 +77,11 @@ export const MENU_ITEMS: Array<MenuItems> = [
     label: "Armazenamento",
     value: "data",
     icon: <MdSdStorage size={16} />
+  },
+  {
+    label: "Força",
+    value: "force",
+    icon: <MdFitnessCenter size={16} />
   },
 ];
 
@@ -191,4 +196,12 @@ export const DATA_OPTIONS = [
   { label: "Megabyte", value: "megabyte" },
   { label: "Gigabyte", value: "gigabyte" },
   { label: "Terabyte", value: "terabyte" },
+];
+
+export const FORCE_OPTIONS = [
+  { label: "Newton", value: "newton" },
+  { label: "Força da Gravidade", value: "gravity" },
+  { label: "Quilograma-Força", value: "kilogram-force" },
+  { label: "Libra-Força", value: "pound-force" },
+  { label: "Onça-Força", value: "ounce-force" },
 ];

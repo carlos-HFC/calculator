@@ -6,10 +6,10 @@ import { Calculator } from "../Calculator";
 import { Conversor } from "../Conversor";
 import { Display } from "../Display";
 
-import { AreaType, CalculatorType, DataType, EnergyType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
-import { AREA_OPTIONS, DATA_OPTIONS, ENERGY_OPTIONS, FREQUENCY_OPTIONS, LENGTH_OPTIONS, NUMBER_OPTIONS, POWER_OPTIONS, PRESSURE_OPTIONS, SPEED_OPTIONS, TEMPERATURE_OPTIONS, TIME_OPTIONS, VOLUME_OPTIONS, WEIGHT_OPTIONS } from "@/constants";
+import { AreaType, CalculatorType, DataType, EnergyType, ForceType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
+import { AREA_OPTIONS, DATA_OPTIONS, ENERGY_OPTIONS, FORCE_OPTIONS, FREQUENCY_OPTIONS, LENGTH_OPTIONS, NUMBER_OPTIONS, POWER_OPTIONS, PRESSURE_OPTIONS, SPEED_OPTIONS, TEMPERATURE_OPTIONS, TIME_OPTIONS, VOLUME_OPTIONS, WEIGHT_OPTIONS } from "@/constants";
 import { useCalculator } from "@/contexts/Calculator";
-import { classNames, convertArea, convertData, convertEnergy, convertFrequency, convertLength, convertNumber, convertPower, convertPressure, convertSpeed, convertTemperature, convertTime, convertVolume, convertWeight } from "@/utils";
+import { classNames, convertArea, convertData, convertEnergy, convertForce, convertFrequency, convertLength, convertNumber, convertPower, convertPressure, convertSpeed, convertTemperature, convertTime, convertVolume, convertWeight } from "@/utils";
 
 const VARIANTS = (type: CalculatorType) => {
   switch (type) {
@@ -154,6 +154,16 @@ const CALCULATORS: Record<CalculatorType, ReactNode> = {
       initialValue={{
         from: "byte",
         to: "kilobyte"
+      }}
+    />
+  ),
+  force: (
+    <Conversor<ForceType>
+      chooseConversion={convertForce}
+      list={FORCE_OPTIONS}
+      initialValue={{
+        from: "newton",
+        to: "gravity"
       }}
     />
   ),

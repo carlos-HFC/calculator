@@ -1,4 +1,4 @@
-import { AreaType, ConvertMeasureParams, DataType, EnergyType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
+import { AreaType, ConvertMeasureParams, DataType, EnergyType, ForceType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -800,5 +800,40 @@ export function convertData({ value, from, to }: ConvertMeasureParams<DataType, 
       if (to === 'megabyte') return `${value * 1000000} MB`;
       if (to === 'gigabyte') return `${value * 1000} GB`;
       if (to === 'terabyte') return `${value} TB`;
+  }
+}
+
+export function convertForce({ value, from, to }: ConvertMeasureParams<ForceType, 'to'>) {
+  switch (from) {
+    case "newton":
+      if (to === 'newton') return `${value} N`;
+      if (to === 'gravity') return `${value * 101.97162} gf`;
+      if (to === 'kilogram-force') return `${value * 0.101972} kgf`;
+      if (to === 'pound-force') return `${value * 0.224809} lbf`;
+      if (to === 'ounce-force') return `${value * 3.596943} ozf`;
+    case "gravity":
+      if (to === 'newton') return `${value * 0.009807} N`;
+      if (to === 'gravity') return `${value} gf`;
+      if (to === 'kilogram-force') return `${value * 0.001} kgf`;
+      if (to === 'pound-force') return `${value * 0.002205} lbf`;
+      if (to === 'ounce-force') return `${value * 0.035274} ozf`;
+    case "kilogram-force":
+      if (to === 'newton') return `${value * 9.80665} N`;
+      if (to === 'gravity') return `${value * 1000} gf`;
+      if (to === 'kilogram-force') return `${value} kgf`;
+      if (to === 'pound-force') return `${value * 2.204623} lbf`;
+      if (to === 'ounce-force') return `${value * 35.273963} ozf`;
+    case "pound-force":
+      if (to === 'newton') return `${value * 4.448222} N`;
+      if (to === 'gravity') return `${value * 453.592371} gf`;
+      if (to === 'kilogram-force') return `${value * 0.453592} kgf`;
+      if (to === 'pound-force') return `${value} lbf`;
+      if (to === 'ounce-force') return `${value * 16} ozf`;
+    case "ounce-force":
+      if (to === 'newton') return `${value * 0.278014} N`;
+      if (to === 'gravity') return `${value * 28.349523} gf`;
+      if (to === 'kilogram-force') return `${value * 0.02835} kgf`;
+      if (to === 'pound-force') return `${value * 0.0625} lbf`;
+      if (to === 'ounce-force') return `${value} ozf`;
   }
 }
