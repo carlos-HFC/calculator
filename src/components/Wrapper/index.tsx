@@ -6,32 +6,21 @@ import { Calculator } from "../Calculator";
 import { Conversor } from "../Conversor";
 import { Display } from "../Display";
 
-import { AreaType, CalculatorType, EnergyType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
-import { AREA_OPTIONS, ENERGY_OPTIONS, FREQUENCY_OPTIONS, LENGTH_OPTIONS, NUMBER_OPTIONS, POWER_OPTIONS, PRESSURE_OPTIONS, SPEED_OPTIONS, TEMPERATURE_OPTIONS, TIME_OPTIONS, VOLUME_OPTIONS, WEIGHT_OPTIONS } from "@/constants";
+import { AreaType, CalculatorType, DataType, EnergyType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
+import { AREA_OPTIONS, DATA_OPTIONS, ENERGY_OPTIONS, FREQUENCY_OPTIONS, LENGTH_OPTIONS, NUMBER_OPTIONS, POWER_OPTIONS, PRESSURE_OPTIONS, SPEED_OPTIONS, TEMPERATURE_OPTIONS, TIME_OPTIONS, VOLUME_OPTIONS, WEIGHT_OPTIONS } from "@/constants";
 import { useCalculator } from "@/contexts/Calculator";
-import { classNames, convertArea, convertEnergy, convertFrequency, convertLength, convertNumber, convertPower, convertPressure, convertSpeed, convertTemperature, convertTime, convertVolume, convertWeight } from "@/utils";
+import { classNames, convertArea, convertData, convertEnergy, convertFrequency, convertLength, convertNumber, convertPower, convertPressure, convertSpeed, convertTemperature, convertTime, convertVolume, convertWeight } from "@/utils";
 
 const VARIANTS = (type: CalculatorType) => {
   switch (type) {
-    case "temperature":
-    case "speed":
-    case "length":
-    case "weight":
-    case "volume":
-    case "area":
-    case "power":
-    case "energy":
-    case "frequency":
-    case "time":
-    case "pressure":
-      return "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]";
     case "number":
-      return "grid-cols-3 grid-rows-[1fr_repeat(8,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(8,_minmax(64px,_auto))]"
+      return "grid-cols-3 grid-rows-[1fr_repeat(8,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(8,_minmax(64px,_auto))]";
     case "science":
       return "grid-cols-4 grid-rows-[1fr_repeat(7,_52px)] xs:grid-rows-[1fr_repeat(7,_64px)]";
     case "default":
-    default:
       return "grid-cols-4 grid-rows-[1fr_repeat(6,_52px)] xs:grid-rows-[1fr_repeat(6,_64px)]";
+    default:
+      return "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]";
   }
 };
 
@@ -155,6 +144,16 @@ const CALCULATORS: Record<CalculatorType, ReactNode> = {
       initialValue={{
         from: "decimal",
         to: "binary"
+      }}
+    />
+  ),
+  data: (
+    <Conversor<DataType>
+      chooseConversion={convertData}
+      list={DATA_OPTIONS}
+      initialValue={{
+        from: "byte",
+        to: "kilobyte"
       }}
     />
   ),

@@ -1,4 +1,4 @@
-import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors, MdSchedule, Md123 } from 'react-icons/md';
+import { MdCalculate, MdScience, MdDeviceThermostat, MdSpeed, MdStraighten, MdScale, MdWaterDrop, MdSquareFoot, MdElectricBolt, MdDirectionsRun, MdPower, MdSensors, MdSchedule, Md123,MdSdStorage } from 'react-icons/md';
 
 import { MenuItems } from "@/@types";
 
@@ -72,6 +72,11 @@ export const MENU_ITEMS: Array<MenuItems> = [
     label: "Número",
     value: "number",
     icon: <Md123 size={16} />
+  },
+  {
+    label: "Armazenamento",
+    value: "data",
+    icon: <MdSdStorage size={16} />
   },
 ];
 
@@ -177,4 +182,13 @@ export const NUMBER_OPTIONS = [
   { label: "Decimal", value: "decimal" },
   { label: "Hexadecimal", value: "hexadecimal" },
   { label: "Octal", value: "octal" },
+];
+
+export const DATA_OPTIONS = [
+  { label: "Bit", value: "bit" },
+  { label: "Byte", value: "byte" },
+  { label: "Kilobyte", value: "kilobyte" },
+  { label: "Megabyte", value: "megabyte" },
+  { label: "Gigabyte", value: "gigabyte" },
+  { label: "Terabyte", value: "terabyte" },
 ];

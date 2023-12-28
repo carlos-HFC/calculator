@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type CalculatorType = "default" | "science" | "temperature" | "speed" | "length" | "weight" | "volume" | "area" | "power" | "pressure" | "energy" | "frequency" | "time" | "number";
+export type CalculatorType = "default" | "science" | "temperature" | "speed" | "length" | "weight" | "volume" | "area" | "power" | "pressure" | "energy" | "frequency" | "time" | "number"|"data";
 
 export type MenuItems = {
   label: string;
@@ -43,3 +43,5 @@ export type FrequencyType = "hertz" | "kilohertz" | "megahertz" | "gigahertz" | 
 export type TimeType = "millisecond" | "second" | "minute" | "hour" | "day" | "week" | "month" | "year";
 
 export type NumberType = "binary" | "decimal" | "octal" | "hexadecimal";
+
+export type DataType = "bit" | "byte" | "kilobyte" | "megabyte" | "gigabyte" | "terabyte";

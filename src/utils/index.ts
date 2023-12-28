@@ -1,4 +1,4 @@
-import { AreaType, ConvertMeasureParams, EnergyType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
+import { AreaType, ConvertMeasureParams, DataType, EnergyType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
 
 export function factorialize(value: number): number {
   if (value < 0) return -1;
@@ -753,5 +753,52 @@ export function convertNumber({ value, from, to }: ConvertMeasureParams<NumberTy
       if (to === 'decimal') return hexToDecimal(String(value));
       if (to === 'hexadecimal') return value;
       if (to === 'octal') return hexToOctal(String(value));
+  }
+}
+
+export function convertData({ value, from, to }: ConvertMeasureParams<DataType, 'to'>) {
+  switch (from) {
+    case "bit":
+      if (to === 'bit') return `${value} b`;
+      if (to === 'byte') return `${value * 0.125} B`;
+      if (to === 'kilobyte') return `${value * 0.000125} KB`;
+      if (to === 'megabyte') return `${value * 0.000000125} MB`;
+      if (to === 'gigabyte') return `${value * 0.000000000125} GB`;
+      if (to === 'terabyte') return `${value * 0.000000000000125} TB`;
+    case "byte":
+      if (to === 'bit') return `${value * 8} b`;
+      if (to === 'byte') return `${value} B`;
+      if (to === 'kilobyte') return `${value * 0.001} KB`;
+      if (to === 'megabyte') return `${value * 0.000001} MB`;
+      if (to === 'gigabyte') return `${value * 0.000000001} GB`;
+      if (to === 'terabyte') return `${value * 0.000000000001} TB`;
+    case "kilobyte":
+      if (to === 'bit') return `${value * 8000} b`;
+      if (to === 'byte') return `${value * 1000} B`;
+      if (to === 'kilobyte') return `${value} KB`;
+      if (to === 'megabyte') return `${value * 0.001} MB`;
+      if (to === 'gigabyte') return `${value * 0.000001} GB`;
+      if (to === 'terabyte') return `${value * 0.000000001} TB`;
+    case "megabyte":
+      if (to === 'bit') return `${value * 8000000} b`;
+      if (to === 'byte') return `${value * 1000000} B`;
+      if (to === 'kilobyte') return `${value * 1000} KB`;
+      if (to === 'megabyte') return `${value} MB`;
+      if (to === 'gigabyte') return `${value * 0.001} GB`;
+      if (to === 'terabyte') return `${value * 0.000001} TB`;
+    case "gigabyte":
+      if (to === 'bit') return `${value * 8000000000} b`;
+      if (to === 'byte') return `${value * 1000000000} B`;
+      if (to === 'kilobyte') return `${value * 1000000} KB`;
+      if (to === 'megabyte') return `${value * 1000} MB`;
+      if (to === 'gigabyte') return `${value} GB`;
+      if (to === 'terabyte') return `${value * 0.001} TB`;
+    case "terabyte":
+      if (to === 'bit') return `${value * 8000000000000} b`;
+      if (to === 'byte') return `${value * 1000000000000} B`;
+      if (to === 'kilobyte') return `${value * 1000000000} KB`;
+      if (to === 'megabyte') return `${value * 1000000} MB`;
+      if (to === 'gigabyte') return `${value * 1000} GB`;
+      if (to === 'terabyte') return `${value} TB`;
   }
 }
