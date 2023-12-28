@@ -2,6 +2,8 @@ import Image from "next/image";
 import { useState, useEffect, useCallback, memo } from "react";
 import { MdMenu } from "react-icons/md";
 
+import { NavItem } from "../NavItem";
+
 import { CalculatorType } from "@/@types";
 import { MENU_ITEMS } from "@/constants";
 import { useCalculator } from "@/contexts/Calculator";
@@ -79,16 +81,14 @@ export const Nav = memo(() => {
         className={classNames("bg-zinc-900 absolute duration-500 top-full right-0 h-[calc(100vh-100%)] flex flex-col text-left w-full md:w-1/3 z-10 overflow-auto", isOpen ? "translate-x-0" : "translate-x-full")}
         onClick={e => e.stopPropagation()}
       >
-        {MENU_ITEMS.map((menu, i) => (
-          <li key={i.toString().padStart(4, '0')}>
-            <button
-              className={classNames("border-0 outline-none text-left w-full cursor-pointer duration-[250ms] px-4 py-6 text-lg flex items-center gap-1", menu.value === type ? "bg-zinc-700" : "hover:bg-zinc-800")}
-              onClick={() => changeType(menu.value)}
-            >
-              {menu.icon}
-              {menu.label}
-            </button>
-          </li>
+        {MENU_ITEMS.map(menu => (
+          <NavItem
+            key={menu.label}
+            icon={menu.icon}
+            label={menu.label}
+            isActive={menu.value === type}
+            onClick={() => changeType(menu.value)}
+          />
         ))}
       </ul>
     </nav>

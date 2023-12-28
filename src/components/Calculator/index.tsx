@@ -85,7 +85,7 @@ export function Calculator() {
       setDisplay('0');
       setCalc(INITIAL_STATE);
     },
-    [calc, display]
+    []
   );
 
   const erase = useCallback(
@@ -100,7 +100,7 @@ export function Calculator() {
         return newValue;
       });
     },
-    [calc, display]
+    [calc]
   );
 
   const addCharacter = useCallback(
@@ -250,8 +250,6 @@ export function Calculator() {
 
   return (
     <>
-      {/* <Display value={display} /> */}
-
       {IS_SCIENCE && (
         <>
           <Button disabled={error} label="|&#x1D465;|" bt-type="operation" onClick={() => setOperation('abs')} />
