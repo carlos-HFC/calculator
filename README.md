@@ -31,7 +31,7 @@ npm install
 
 ## Executando a Aplicação
 
-Com as dependências instaladas e a BASE_URL configurada, você pode iniciar a aplicação:
+Com as dependências instaladas, você pode iniciar a aplicação:
 
 ```bash
 npm run dev
