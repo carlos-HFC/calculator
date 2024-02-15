@@ -11,7 +11,7 @@ export function termialize(value: number): number {
   return (value * (value + 1)) / 2;
 }
 
-export function classNames(...classes: string[]) {
+export function cn(...classes: Array<string | boolean | undefined>) {
   return classes.filter(Boolean).join(' ');
 }
 

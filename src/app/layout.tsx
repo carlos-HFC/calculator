@@ -2,10 +2,12 @@ import type { Metadata, Viewport } from 'next';
 import { PropsWithChildren } from "react";
 
 import { sharedMetadata } from "./shared-metadata";
-import { CalculatorProvider } from "@/contexts/Calculator";
+
 import { Header } from "@/components/Header";
 
-import 'material-symbols'
+import { CalculatorProvider } from "@/contexts/Calculator";
+
+import 'material-symbols';
 import './globals.css';
 
 export const metadata: Metadata = sharedMetadata;
@@ -18,7 +20,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="pt-BR">
-      <body className="overflow-x-hidden bg-default min-h-screen">
+      <body className="overflow-hidden bg-default min-h-screen flex flex-col">
         <CalculatorProvider>
           <Header />
           {children}

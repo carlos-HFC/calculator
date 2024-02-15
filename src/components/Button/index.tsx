@@ -1,7 +1,7 @@
-import { classNames } from "@/utils";
+import { cn } from "@/utils";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  'bt-type': 'number' | 'operation' | 'equal';
+  variant: 'number' | 'operation' | 'equal';
   label: React.ReactNode;
   double?: boolean;
 }
@@ -17,7 +17,12 @@ export function Button({ double, ...props }: ButtonProps) {
   return (
     <button
       {...props}
-      className={classNames(`w-full font-sans text-base xs:text-xl border border-transparent outline-none duration-300 rounded-md cursor-default disabled:pointer-events-none`, double ? 'col-span-2' : '', props.disabled ? VARIANTS['disabled'] : VARIANTS[props["bt-type"]], props?.className ?? '')}
+      className={cn(
+        "w-full font-sans text-base xs:text-xl border border-transparent outline-none duration-300 rounded-md cursor-default disabled:pointer-events-none grid place-items-center",
+        double && 'col-span-2',
+        props.disabled ? VARIANTS['disabled'] : VARIANTS[props.variant],
+        props?.className
+      )}
       children={props.label}
     />
   );

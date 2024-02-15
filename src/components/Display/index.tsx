@@ -1,11 +1,10 @@
 import { CalculatorType } from "@/@types";
 import { useCalculator } from "@/contexts/Calculator";
-import { classNames } from "@/utils";
+import { cn } from "@/utils";
 
 const VARIANTS = (type: CalculatorType) => {
   switch (type) {
     case "default":
-    case "science":
       return 'justify-end text-6xl py-10';
     default:
       return 'text-5xl py-6';
@@ -13,13 +12,17 @@ const VARIANTS = (type: CalculatorType) => {
 };
 
 export function Display() {
-  const { type, display } = useCalculator();
+  const { type, display, setDisplay } = useCalculator();
 
   return (
-    <div className={classNames("overflow-hidden px-4 flex items-center bg-[#202020] font-semibold col-span-full", VARIANTS(type))}>
-      <p className="overflow-x-auto overflow-y-hidden font-sans">
-        {display}
-      </p>
+    <div className={cn("overflow-hidden px-4 flex items-center bg-[#202020] font-semibold col-span-full", VARIANTS(type))}>
+      <input
+        readOnly
+        type="text"
+        value={display}
+        onChange={e => setDisplay(e.target.value)}
+        className="bg-transparent w-full text-right font-sans outline-none"
+      />
     </div>
   );
 }

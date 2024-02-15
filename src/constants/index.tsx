@@ -7,11 +7,6 @@ export const MENU_ITEMS: Array<MenuItems> = [
     icon: <span className="material-symbols-outlined">calculate</span>
   },
   {
-    label: "Científica",
-    value: "science",
-    icon: <span className="material-symbols-outlined">experiment</span>
-  },
-  {
     label: "Temperatura",
     value: "temperature",
     icon: <span className="material-symbols-outlined">thermometer</span>

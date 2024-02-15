@@ -9,24 +9,21 @@ import { Display } from "../Display";
 import { AreaType, CalculatorType, DataType, EnergyType, ForceType, FrequencyType, LengthType, NumberType, PowerType, PressureType, SpeedType, TemperatureType, TimeType, VolumeType, WeightType } from "@/@types";
 import { AREA_OPTIONS, DATA_OPTIONS, ENERGY_OPTIONS, FORCE_OPTIONS, FREQUENCY_OPTIONS, LENGTH_OPTIONS, NUMBER_OPTIONS, POWER_OPTIONS, PRESSURE_OPTIONS, SPEED_OPTIONS, TEMPERATURE_OPTIONS, TIME_OPTIONS, VOLUME_OPTIONS, WEIGHT_OPTIONS } from "@/constants";
 import { useCalculator } from "@/contexts/Calculator";
-import { classNames, convertArea, convertData, convertEnergy, convertForce, convertFrequency, convertLength, convertNumber, convertPower, convertPressure, convertSpeed, convertTemperature, convertTime, convertVolume, convertWeight } from "@/utils";
+import { cn, convertArea, convertData, convertEnergy, convertForce, convertFrequency, convertLength, convertNumber, convertPower, convertPressure, convertSpeed, convertTemperature, convertTime, convertVolume, convertWeight } from "@/utils";
 
 const VARIANTS = (type: CalculatorType) => {
   switch (type) {
     case "number":
-      return "grid-cols-3 grid-rows-[1fr_repeat(8,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(8,_minmax(64px,_auto))]";
-    case "science":
-      return "grid-cols-4 grid-rows-[1fr_repeat(7,_52px)] xs:grid-rows-[1fr_repeat(7,_64px)]";
+      return "grid-cols-3 sm:grid-rows-[1fr_repeat(8,_minmax(64px,_auto))]";
     case "default":
-      return "grid-cols-4 grid-rows-[1fr_repeat(6,_52px)] xs:grid-rows-[1fr_repeat(6,_64px)]";
+      return "grid-cols-4 sm:grid-rows-[1fr_repeat(6,_76px)]";
     default:
-      return "grid-cols-3 grid-rows-[1fr_repeat(6,_minmax(52px,_auto))] xs:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]";
+      return "grid-cols-3 sm:grid-rows-[1fr_repeat(6,_minmax(64px,_auto))]";
   }
 };
 
 const CALCULATORS: Record<CalculatorType, ReactNode> = {
   default: <Calculator />,
-  science: <Calculator />,
   temperature: (
     <Conversor<TemperatureType>
       chooseConversion={convertTemperature}
@@ -173,9 +170,9 @@ export function Wrapper() {
   const { type } = useCalculator();
 
   return (
-    <div className={classNames(`bg-[#202020] p-1 grid gap-1 border border-[#3f4046] rounded-lg h-auto w-full sm:w-[420px]`, VARIANTS(type))}>
+    <div className={cn(`bg-[#202020] p-1 grid gap-1 flex-1 sm:flex-initial sm:rounded-lg h-full sm:h-auto w-full sm:w-[420px]`, VARIANTS(type))}>
       <Display />
-      {CALCULATORS[type ?? 'default']}
+      {CALCULATORS[type]}
     </div>
   );
 }

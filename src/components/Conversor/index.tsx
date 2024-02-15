@@ -7,7 +7,6 @@ import { Select } from "../Select";
 
 import { ChooseConversion, ConvertMeasureParams } from "@/@types";
 import { useCalculator } from "@/contexts/Calculator";
-import { classNames } from "@/utils";
 
 interface ConversorProps<T> {
   chooseConversion(params: ConvertMeasureParams<T, 'to'>): string | number | undefined;
@@ -142,14 +141,14 @@ export function Conversor<T>(props: ConversorProps<T>) {
 
   const clearDisplay = useCallback(
     () => {
-      setDisplay('0');
+      setDisplay('');
     },
     []
   );
 
   const erase = useCallback(
     () => {
-      setDisplay(prev => prev.slice(0, -1) || '0');
+      setDisplay(prev => prev.slice(0, -1));
     },
     [display]
   );
@@ -159,9 +158,7 @@ export function Conversor<T>(props: ConversorProps<T>) {
       setDisplay(prev => {
         if (character === '.' && prev.includes('.')) return prev;
 
-        return prev === '0'
-          ? `${character}`
-          : `${prev}${character}`;
+        return `${prev}${character}`;
       });
     },
     []
@@ -234,37 +231,129 @@ export function Conversor<T>(props: ConversorProps<T>) {
         </div>
       </div>
 
-      <Button className="col-start-2" label="C" bt-type="operation" onClick={clearDisplay} />
-      <Button label="⌫" bt-type="operation" onClick={erase} />
+      <Button
+        className="col-start-2"
+        label="C"
+        variant="operation"
+        onClick={clearDisplay}
+      />
+      <Button
+        label={<span className="material-symbols-outlined">backspace</span>}
+        variant="operation"
+        onClick={erase}
+      />
 
-      <Button disabled={IS_BINARY_CONVERSION} label="7" bt-type="number" onClick={() => addCharacter(7)} />
-      <Button disabled={IS_BINARY_CONVERSION || IS_OCTAL_CONVERSION} label="8" bt-type="number" onClick={() => addCharacter(8)} />
-      <Button disabled={IS_BINARY_CONVERSION || IS_OCTAL_CONVERSION} label="9" bt-type="number" onClick={() => addCharacter(9)} />
+      <Button
+        disabled={IS_BINARY_CONVERSION}
+        label="7"
+        variant="number"
+        onClick={() => addCharacter(7)}
+      />
+      <Button
+        disabled={IS_BINARY_CONVERSION || IS_OCTAL_CONVERSION}
+        label="8"
+        variant="number"
+        onClick={() => addCharacter(8)}
+      />
+      <Button
+        disabled={IS_BINARY_CONVERSION || IS_OCTAL_CONVERSION}
+        label="9"
+        variant="number"
+        onClick={() => addCharacter(9)}
+      />
 
-      <Button disabled={IS_BINARY_CONVERSION} label="4" bt-type="number" onClick={() => addCharacter(4)} />
-      <Button disabled={IS_BINARY_CONVERSION} label="5" bt-type="number" onClick={() => addCharacter(5)} />
-      <Button disabled={IS_BINARY_CONVERSION} label="6" bt-type="number" onClick={() => addCharacter(6)} />
+      <Button
+        disabled={IS_BINARY_CONVERSION}
+        label="4"
+        variant="number"
+        onClick={() => addCharacter(4)}
+      />
+      <Button
+        disabled={IS_BINARY_CONVERSION}
+        label="5"
+        variant="number"
+        onClick={() => addCharacter(5)}
+      />
+      <Button
+        disabled={IS_BINARY_CONVERSION}
+        label="6"
+        variant="number"
+        onClick={() => addCharacter(6)}
+      />
 
-      <Button label="1" bt-type="number" onClick={() => addCharacter(1)} />
-      <Button disabled={IS_BINARY_CONVERSION} label="2" bt-type="number" onClick={() => addCharacter(2)} />
-      <Button disabled={IS_BINARY_CONVERSION} label="3" bt-type="number" onClick={() => addCharacter(3)} />
+      <Button
+        label="1"
+        variant="number"
+        onClick={() => addCharacter(1)}
+      />
+      <Button
+        disabled={IS_BINARY_CONVERSION}
+        label="2"
+        variant="number"
+        onClick={() => addCharacter(2)}
+      />
+      <Button
+        disabled={IS_BINARY_CONVERSION}
+        label="3"
+        variant="number"
+        onClick={() => addCharacter(3)}
+      />
 
       {IS_NUMBER_CONVERSION && (
         <>
-          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="A" bt-type="number" onClick={() => addCharacter("A")} />
-          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="B" bt-type="number" onClick={() => addCharacter("B")} />
-          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="C" bt-type="number" onClick={() => addCharacter("C")} />
+          <Button
+            disabled={!IS_HEXADECIMAL_CONVERSION}
+            label="A"
+            variant="number"
+            onClick={() => addCharacter("A")}
+          />
+          <Button
+            disabled={!IS_HEXADECIMAL_CONVERSION}
+            label="B"
+            variant="number"
+            onClick={() => addCharacter("B")}
+          />
+          <Button
+            disabled={!IS_HEXADECIMAL_CONVERSION}
+            label="C"
+            variant="number"
+            onClick={() => addCharacter("C")}
+          />
 
-          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="D" bt-type="number" onClick={() => addCharacter("D")} />
-          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="E" bt-type="number" onClick={() => addCharacter("E")} />
-          <Button disabled={!IS_HEXADECIMAL_CONVERSION} label="F" bt-type="number" onClick={() => addCharacter("F")} />
+          <Button
+            disabled={!IS_HEXADECIMAL_CONVERSION}
+            label="D"
+            variant="number"
+            onClick={() => addCharacter("D")}
+          />
+          <Button
+            disabled={!IS_HEXADECIMAL_CONVERSION}
+            label="E"
+            variant="number"
+            onClick={() => addCharacter("E")}
+          />
+          <Button
+            disabled={!IS_HEXADECIMAL_CONVERSION}
+            label="F"
+            variant="number"
+            onClick={() => addCharacter("F")}
+          />
         </>
       )}
 
-      <Button className={classNames(IS_NUMBER_CONVERSION ? 'col-span-full' : 'col-start-2')} label="0" bt-type="number" onClick={() => addCharacter(0)} />
+      <Button
+        className="col-start-2"
+        label="0"
+        variant="number"
+        onClick={() => addCharacter(0)}
+      />
 
       {(!IS_NUMBER_CONVERSION) && (
-        <Button label="," bt-type="number" onClick={() => addCharacter('.')} />
+        <Button
+          label=","
+          variant="number"
+          onClick={() => addCharacter('.')}
+        />
       )}
     </>
   );
