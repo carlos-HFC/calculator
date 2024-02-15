@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type CalculatorType = "default" | "science" | "temperature" | "speed" | "length" | "weight" | "volume" | "area" | "power" | "pressure" | "energy" | "frequency" | "time" | "number" | "data" | "force";
+export type CalculatorType = "default" | "temperature" | "speed" | "length" | "weight" | "volume" | "area" | "power" | "pressure" | "energy" | "frequency" | "time" | "number" | "data" | "force";
 
 export type MenuItems = {
   label: string;

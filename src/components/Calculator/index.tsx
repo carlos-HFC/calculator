@@ -1,26 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 
 import { Button } from "../Button";
 
 import { useCalculator } from "@/contexts/Calculator";
 import { factorialize, termialize } from "@/utils";
 
-const INITIAL_STATE = {
-  clear: false,
-  operation: null as null | string,
-  values: [0, 0],
-  current: 0
-};
-
 export function Calculator() {
-  const [calc, setCalc] = useState(INITIAL_STATE);
+  const { display, setDisplay } = useCalculator();
 
-  const { type, display, setDisplay } = useCalculator();
-
-  const IS_SCIENCE = useMemo(() => type === 'science', [type]);
-  const error = useMemo(() => display === 'Erro', [display]);
+  const isError = useMemo(() => display === 'Erro', [display]);
+  const LAST_CHARACTER = String(display.at(-1));
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -28,25 +19,22 @@ export function Calculator() {
         case 'Backspace':
           return erase();
         case 'Enter':
-          return setOperation('=');
+          return showResult();
         case 'Escape':
         case 'Delete':
           return clearDisplay();
+        case '(':
+          return addCharacter('(');
+        case ')':
+          return addCharacter(')');
         case '/':
-          return setOperation('/');
+          return addCharacter('/');
         case '+':
-          return setOperation('+');
+          return addCharacter('+');
         case '-':
-          if (display === '0' || display === '-') return addCharacter('-');
-          return setOperation('-');
+          return addCharacter('-');
         case '*':
-          return setOperation('*');
-        case '%':
-          return setOperation('%');
-        case '?':
-          return setOperation('?');
-        case '!':
-          return setOperation('!');
+          return addCharacter('*');
         case ',':
         case '.':
           return addCharacter('.');
@@ -70,8 +58,12 @@ export function Calculator() {
           return addCharacter('8');
         case '9':
           return addCharacter('9');
+        case '?':
+          return operationCalculate('?');
+        case '!':
+          return operationCalculate('!');
         case 'Dead':
-          return setOperation('pow');
+          return addCharacter('^');
       }
     };
 
@@ -80,219 +72,212 @@ export function Calculator() {
     return () => document.removeEventListener('keydown', onKeyDown);
   });
 
-  const clearDisplay = useCallback(
-    () => {
-      setDisplay('0');
-      setCalc(INITIAL_STATE);
-    },
-    []
-  );
+  function clearDisplay() {
+    setDisplay("");
+  }
 
-  const erase = useCallback(
-    () => {
-      setDisplay(prev => {
-        const newValue = prev.slice(0, -1) || '0';
+  function erase() {
+    setDisplay(prev => prev.slice(0, -1));
+  }
 
-        const values = [...calc.values];
-        values[calc.current] = Number(newValue);
-        setCalc(prev => ({ ...prev, values }));
+  function addCharacter(character: string) {
+    const validOperations = "/*-+.".split("");
 
-        return newValue;
-      });
-    },
-    [calc]
-  );
+    const lastNumberInDisplay = display.split(/[\-\+\/\*]/g).at(-1) ?? '0';
+    const lastCharacterIsOperation = validOperations.includes(character) && validOperations.includes(LAST_CHARACTER);
 
-  const addCharacter = useCallback(
-    (character: string | number) => {
-      if (
-        (character === '.' && display.includes('.')) ||
-        (character === '-' && display.includes('-'))
-      ) return;
+    if (
+      (lastCharacterIsOperation) ||
+      (character === '.' && lastNumberInDisplay.includes('.'))
+    ) return;
 
-      const clear = display === '0' || calc.clear;
-      const current = clear ? '' : display;
-      const displayValue = `${current}${character}`;
-      setDisplay(displayValue);
-      setCalc(prev => ({ ...prev, clear: false }));
+    setDisplay(prev => prev + character);
+  }
 
-      if (character !== '.') {
-        const values = [...calc.values];
-        values[calc.current] = Number(displayValue);
-        setCalc(prev => ({ ...prev, values }));
-      }
-    },
-    [display, calc]
-  );
+  function basicCalculate(value: string) {
+    try {
+      const total = eval(value.replaceAll("^", "**"));
 
-  const setOperation = useCallback(
-    (operacao: string) => {
-      const BASIC_OPERATION = operacao === '/' || operacao === '-' || operacao === '+' || operacao === '*' || operacao === '=' || operacao === '%' || operacao === 'pow';
+      return setDisplay(total.toString());
+    } catch (error) {
+      return setDisplay("Erro");
+    }
+  }
 
-      const { current, operation, values } = calc;
+  function showResult() {
+    const countOpenParentesis = display.split("(").length - 1;
+    const countCloseParentesis = display.split(")").length - 1;
 
-      if (BASIC_OPERATION) {
-        if (current === 0) {
-          return setCalc(prev => ({
-            ...prev,
-            operation: operacao,
-            current: 1,
-            clear: true
-          }));
-        }
+    if (display.includes("(") && countOpenParentesis !== countCloseParentesis) {
+      return basicCalculate(display + ")".repeat(countOpenParentesis - countCloseParentesis));
+    }
 
-        switch (operation) {
-          case '+':
-            values[0] = values[0] + values[1];
-            break;
-          case '-':
-            values[0] = values[0] - values[1];
-            break;
-          case '/':
-            values[0] = values[0] / values[1];
-            break;
-          case '*':
-            values[0] = values[0] * values[1];
-            break;
-          case '%':
-            values[0] = values[0] % values[1];
-            break;
-          case 'pow':
-            values[0] = Math.pow(values[0], values[1]);
-            break;
-        }
-      }
+    return basicCalculate(display);
+  }
 
-      switch (operacao) {
-        case 'sqrt':
-          const sqrtValue = String(Math.sqrt(values[0]));
-          setDisplay(sqrtValue);
+  function operationCalculate(operation: string) {
+    const displayValue = Number(display);
 
-          values[0] = Number(sqrtValue);
-          return setCalc(prev => ({
-            ...prev,
-            clear: true,
-            values
-          }));
-        case 'fractal':
-          const fractalValue = String(1 / values[0]);
-          setDisplay(fractalValue);
-
-          values[0] = Number(fractalValue);
-          return setCalc(prev => ({
-            ...prev,
-            clear: true,
-            values
-          }));
-        case 'pow-2':
-          const powValue = String(Math.pow(values[0], 2));
-          setDisplay(powValue);
-
-          values[0] = Number(powValue);
-          return setCalc(prev => ({
-            ...prev,
-            clear: true,
-            values
-          }));
-        case 'pi':
-          const piValue = String(Math.PI);
-
-          return setDisplay(piValue);
-        case '!':
-          if (values[0] < 0) return setDisplay("Erro");
-
-          const factorialValue = String(factorialize(values[0]));
-          setDisplay(factorialValue);
-
-          values[0] = Number(factorialValue);
-          return setCalc(prev => ({
-            ...prev,
-            clear: true,
-            values
-          }));
-        case '?':
-          const termialValue = String(termialize(values[0]));
-          setDisplay(termialValue);
-
-          values[0] = Number(termialValue);
-          return setCalc(prev => ({
-            ...prev,
-            clear: true,
-            values
-          }));
-        case 'abs':
-          const absValue = String(Math.abs(values[0]));
-          setDisplay(absValue);
-
-          values[0] = Number(absValue);
-          return setCalc(prev => ({
-            ...prev,
-            clear: true,
-            values
-          }));
-      }
-
-      const equals = operacao === '=';
-
-      const newValue = values[0] === Infinity ? 'Erro' : values[0];
-
-      values[1] = 0;
-      setDisplay(String(newValue));
-      setCalc({
-        operation: equals ? null : operacao,
-        current: equals ? 0 : 1,
-        clear: !equals,
-        values
-      });
-    },
-    [calc, display, error]
-  );
+    switch (operation) {
+      case 'sqrt':
+        return basicCalculate(String(Math.sqrt(displayValue)));
+      case '!':
+        return basicCalculate(String(factorialize(displayValue)));
+      case '?':
+        return basicCalculate(String(termialize(displayValue)));
+    }
+  }
 
   return (
     <>
-      {IS_SCIENCE && (
-        <>
-          <Button disabled={error} label="|&#x1D465;|" bt-type="operation" onClick={() => setOperation('abs')} />
-          <Button disabled={error} label="&#x3C0;" bt-type="operation" onClick={() => setOperation('pi')} />
-        </>
-      )}
-      <Button label="C" bt-type="operation" double={!IS_SCIENCE} onClick={clearDisplay} />
-      <Button disabled={error} label="⌫" bt-type="operation" double={!IS_SCIENCE} onClick={erase} />
+      <Button
+        label="C"
+        variant="operation"
+        onClick={clearDisplay}
+      />
+      <Button
+        label="&#x1D465;&#x207F;"
+        variant="operation"
+        onClick={() => addCharacter("^")}
+        disabled={isError}
+      />
+      <Button
+        label="&#x1D45B;?"
+        variant="operation"
+        onClick={() => operationCalculate('?')}
+        disabled={isError}
+      />
+      <Button
+        label="&#x1D45B;!"
+        variant="operation"
+        onClick={() => operationCalculate('!')}
+        disabled={isError}
+      />
 
-      {IS_SCIENCE && (
-        <>
-          <Button disabled={error} label="&#x1D465;&#x207F;" bt-type="operation" onClick={() => setOperation('pow')} />
-          <Button disabled={error} label="&#x1D45B;?" bt-type="operation" onClick={() => setOperation('?')} />
-          <Button disabled={error} label="&#x1D45B;!" bt-type="operation" onClick={() => setOperation('!')} />
-          <Button disabled={error} label="mod" bt-type="operation" onClick={() => setOperation('%')} />
-        </>
-      )}
+      <Button
+        label="("
+        variant="operation"
+        onClick={() => addCharacter('(')}
+        disabled={isError}
+      />
+      <Button
+        label=")"
+        variant="operation"
+        onClick={() => addCharacter(')')}
+        disabled={isError}
+      />
+      <Button
+        label="&#x221A;"
+        variant="operation"
+        onClick={() => operationCalculate('sqrt')}
+        disabled={isError}
+      />
+      <Button
+        label="&#xf7;"
+        variant="operation"
+        onClick={() => addCharacter('/')}
+        disabled={isError}
+      />
 
-      <Button disabled={error} label="1/&#x1D465;" bt-type="operation" onClick={() => setOperation('fractal')} />
-      <Button disabled={error} label="&#x1D465;²" bt-type="operation" onClick={() => setOperation('pow-2')} />
-      <Button disabled={error} label="&#x221A;" bt-type="operation" onClick={() => setOperation('sqrt')} />
-      <Button disabled={error} label="&#xf7;" bt-type="operation" onClick={() => setOperation('/')} />
+      <Button
+        label="7"
+        variant="number"
+        onClick={() => addCharacter('7')}
+        disabled={isError}
+      />
+      <Button
+        label="8"
+        variant="number"
+        onClick={() => addCharacter('8')}
+        disabled={isError}
+      />
+      <Button
+        label="9"
+        variant="number"
+        onClick={() => addCharacter('9')}
+        disabled={isError}
+      />
+      <Button
+        label="&#xd7;"
+        variant="operation"
+        onClick={() => addCharacter('*')}
+        disabled={isError}
+      />
 
-      <Button disabled={error} label="7" bt-type="number" onClick={() => addCharacter(7)} />
-      <Button disabled={error} label="8" bt-type="number" onClick={() => addCharacter(8)} />
-      <Button disabled={error} label="9" bt-type="number" onClick={() => addCharacter(9)} />
-      <Button disabled={error} label="&#xd7;" bt-type="operation" onClick={() => setOperation('*')} />
+      <Button
+        label="4"
+        variant="number"
+        onClick={() => addCharacter('4')}
+        disabled={isError}
+      />
+      <Button
+        label="5"
+        variant="number"
+        onClick={() => addCharacter('5')}
+        disabled={isError}
+      />
+      <Button
+        label="6"
+        variant="number"
+        onClick={() => addCharacter('6')}
+        disabled={isError}
+      />
+      <Button
+        label="-"
+        variant="operation"
+        onClick={() => addCharacter('-')}
+        disabled={isError}
+      />
 
-      <Button disabled={error} label="4" bt-type="number" onClick={() => addCharacter(4)} />
-      <Button disabled={error} label="5" bt-type="number" onClick={() => addCharacter(5)} />
-      <Button disabled={error} label="6" bt-type="number" onClick={() => addCharacter(6)} />
-      <Button disabled={error} label="-" bt-type="operation" onClick={() => setOperation('-')} />
+      <Button
+        label="1"
+        variant="number"
+        onClick={() => addCharacter('1')}
+        disabled={isError}
+      />
+      <Button
+        label="2"
+        variant="number"
+        onClick={() => addCharacter('2')}
+        disabled={isError}
+      />
+      <Button
+        label="3"
+        variant="number"
+        onClick={() => addCharacter('3')}
+        disabled={isError}
+      />
+      <Button
+        label="+"
+        variant="operation"
+        onClick={() => addCharacter('+')}
+        disabled={isError}
+      />
 
-
-      <Button disabled={error} label="1" bt-type="number" onClick={() => addCharacter(1)} />
-      <Button disabled={error} label="2" bt-type="number" onClick={() => addCharacter(2)} />
-      <Button disabled={error} label="3" bt-type="number" onClick={() => addCharacter(3)} />
-      <Button disabled={error} label="+" bt-type="operation" onClick={() => setOperation('+')} />
-
-      <Button disabled={error} label="&#xB1;" bt-type="number" onClick={() => setOperation('-')} />
-      <Button disabled={error} label="0" bt-type="number" onClick={() => addCharacter(0)} />
-      <Button disabled={error} label="," bt-type="number" onClick={() => addCharacter('.')} />
-      <Button disabled={error} label="&#x3d;" bt-type="equal" onClick={() => setOperation('=')} />
+      <Button
+        label="0"
+        variant="number"
+        onClick={() => addCharacter('0')}
+        disabled={isError}
+      />
+      <Button
+        label=","
+        variant="number"
+        onClick={() => addCharacter('.')}
+        disabled={isError}
+      />
+      <Button
+        label={<span className="material-symbols-outlined">backspace</span>}
+        variant="number"
+        onClick={erase}
+        disabled={isError}
+      />
+      <Button
+        label="&#x3d;"
+        variant="equal"
+        onClick={showResult}
+        disabled={isError}
+      />
     </>
   );
-}
+};
