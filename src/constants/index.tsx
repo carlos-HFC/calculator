@@ -1,5 +1,7 @@
 import { MenuItems } from "@/@types";
 
+export const CALC_TYPES = ["default", "temperature", "speed", "length", "weight", "volume", "area", "power", "pressure", "energy", "frequency", "time", "number", "data", "force"];
+
 export const MENU_ITEMS: Array<MenuItems> = [
   {
     label: "Padrão",
